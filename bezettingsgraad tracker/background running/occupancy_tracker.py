@@ -23,6 +23,7 @@ import sqlite3
 import sys
 import urllib.request
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from typing import Optional
 from pathlib import Path
 
@@ -64,7 +65,7 @@ VENUES = {
 def venue_close_hour(venue: str, dt: Optional[datetime] = None) -> int:
     """Return the closing hour for *venue* on the given day (default: today)."""
     if dt is None:
-        dt = datetime.now()
+        dt = _now()
     return VENUES[venue]["close_hours"][dt.weekday()]
 
 DB_PATH = Path("occupancy.db")
@@ -80,6 +81,13 @@ USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/122.0.0.0 Safari/537.36"
 )
+
+_AMS = ZoneInfo("Europe/Amsterdam")
+
+def _now() -> datetime:
+    """Naive datetime in Amsterdam local time (correct on UTC GitHub Actions runners)."""
+    return datetime.now(_AMS).replace(tzinfo=None)
+
 
 DEBUG = "--debug" in sys.argv
 RUN_ONCE = "--once" in sys.argv
@@ -178,7 +186,7 @@ def append_csv(row: dict) -> None:
 
 def next_snapshot_time() -> datetime:
     """Return the next :15 or :45 wall-clock time."""
-    now = datetime.now()
+    now = _now()
     if now.minute < 15:
         return now.replace(minute=15, second=0, microsecond=0)
     if now.minute < 45:
@@ -188,7 +196,7 @@ def next_snapshot_time() -> datetime:
 
 def current_slot() -> datetime:
     """Return the next upcoming 30-minute slot (always strictly in the future)."""
-    now = datetime.now()
+    now = _now()
     remainder = now.minute % SLOT_STEP_MINUTES
     delta = (SLOT_STEP_MINUTES - remainder) if remainder != 0 else SLOT_STEP_MINUTES
     return (now + timedelta(minutes=delta)).replace(second=0, microsecond=0)
@@ -209,7 +217,7 @@ def fmt(dt: datetime) -> str:
 
 
 def today_str() -> str:
-    return datetime.now().strftime("%Y-%m-%d")
+    return _now().strftime("%Y-%m-%d")
 
 
 # ---------------------------------------------------------------------------
@@ -318,7 +326,7 @@ async def scrape_vinkenveld(page: Page, target_slots: list[datetime]) -> list[di
         await page.wait_for_timeout(2_000)
 
         if DEBUG:
-            shot = f"debug_vinkenveld_{datetime.now().strftime('%H%M')}.png"
+            shot = f"debug_vinkenveld_{_now().strftime('%H%M')}.png"
             await page.screenshot(path=shot, full_page=True)
             log.debug("Screenshot: %s", shot)
 
@@ -391,7 +399,7 @@ async def scrape_vinkenveld(page: Page, target_slots: list[datetime]) -> list[di
 # ---------------------------------------------------------------------------
 
 async def run_scrape_cycle() -> None:
-    scraped_at = datetime.now()
+    scraped_at = _now()
     time_label = scraped_at.strftime("%H:%M")
     date_str = today_str()
 
@@ -506,7 +514,7 @@ async def wall_clock_sleep(target: datetime) -> None:
     waking up on time.
     """
     while True:
-        remaining = (target - datetime.now()).total_seconds()
+        remaining = (target - _now()).total_seconds()
         if remaining <= 0:
             break
         try:
@@ -530,7 +538,7 @@ async def main() -> None:
     log.info("Scraping at :15 and :45 past each hour, starting %02d:%02d until %02d:00 — Ctrl+C to stop.",
              OPEN_HOUR, OPEN_MINUTE, CLOSE_HOUR)
     while True:
-        now = datetime.now()
+        now = _now()
         before_open = (now.hour, now.minute) < (OPEN_HOUR, OPEN_MINUTE)
         after_close = now.hour >= CLOSE_HOUR
         if before_open or after_close:
