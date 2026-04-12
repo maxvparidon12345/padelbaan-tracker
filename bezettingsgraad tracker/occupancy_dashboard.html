@@ -68,26 +68,26 @@
 
 <header>
   <h1>Padel Occupancy Dashboard</h1>
-  <span class="meta">Generated 12 Apr 2026, 15:15 &nbsp;·&nbsp; 14 observations</span>
+  <span class="meta">Generated 12 Apr 2026, 15:45 &nbsp;·&nbsp; 16 observations</span>
 </header>
 
 <div class="cards">
   
         <div class="card" style="border-top: 4px solid rgba(59,130,246,1);">
           <div class="card-venue">Terwegen</div>
-          <div class="card-avg">79.4%</div>
+          <div class="card-avg">72.1%</div>
           <div class="card-label">overall avg occupancy</div>
           <div class="card-periods">
-            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">—</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">90.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">68.8%</span></div>
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">—</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">90.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">54.2%</span></div>
           </div>
         </div>
         
         <div class="card" style="border-top: 4px solid rgba(16,185,129,1);">
           <div class="card-venue">Vinkenveld</div>
-          <div class="card-avg">8.8%</div>
+          <div class="card-avg">6.7%</div>
           <div class="card-label">overall avg occupancy</div>
           <div class="card-periods">
-            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">—</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">5.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">12.5%</span></div>
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">—</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">5.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">8.3%</span></div>
           </div>
         </div>
         
@@ -112,12 +112,12 @@
 <script>
 const barData = {
   labels: ["Morning", "Afternoon", "Evening"],
-  datasets: [{"label": "Terwegen", "data": [null, 90.0, 68.8], "backgroundColor": "rgba(59,130,246,0.75)", "borderColor": "rgba(59,130,246,1)", "borderWidth": 2, "borderRadius": 6}, {"label": "Vinkenveld", "data": [null, 5.0, 12.5], "backgroundColor": "rgba(16,185,129,0.75)", "borderColor": "rgba(16,185,129,1)", "borderWidth": 2, "borderRadius": 6}],
+  datasets: [{"label": "Terwegen", "data": [null, 90.0, 54.2], "backgroundColor": "rgba(59,130,246,0.75)", "borderColor": "rgba(59,130,246,1)", "borderWidth": 2, "borderRadius": 6}, {"label": "Vinkenveld", "data": [null, 5.0, 8.3], "backgroundColor": "rgba(16,185,129,0.75)", "borderColor": "rgba(16,185,129,1)", "borderWidth": 2, "borderRadius": 6}],
 };
 
 const lineData = {
-  labels: ["14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"],
-  datasets: [{"label": "Terwegen", "data": [100.0, 100.0, 87.5, 87.5, 75.0, 37.5, 100.0], "borderColor": "rgba(59,130,246,1)", "backgroundColor": "rgba(59,130,246,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}, {"label": "Vinkenveld", "data": [0.0, 0.0, 0.0, 0.0, 25.0, 25.0, 0.0], "borderColor": "rgba(16,185,129,1)", "backgroundColor": "rgba(16,185,129,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}],
+  labels: ["14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"],
+  datasets: [{"label": "Terwegen", "data": [100.0, 100.0, 87.5, 87.5, 75.0, 37.5, 100.0, 25.0], "borderColor": "rgba(59,130,246,1)", "backgroundColor": "rgba(59,130,246,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}, {"label": "Vinkenveld", "data": [0.0, 0.0, 0.0, 0.0, 25.0, 25.0, 0.0, 0.0], "borderColor": "rgba(16,185,129,1)", "backgroundColor": "rgba(16,185,129,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}],
 };
 
 const commonScales = {
