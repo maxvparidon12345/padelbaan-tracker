@@ -1,11 +1,7 @@
 name: Padel Occupancy Tracker
 
 on:
-  schedule:
-    # Elke 30 minuten van 05:45 t/m 21:15 UTC = 07:45 t/m 23:15 NL zomertijd (CEST)
-    - cron: '15,45 5-20 * * *'
-    - cron: '15 21 * * *'
-  workflow_dispatch: # ook handmatig te starten via GitHub
+  workflow_dispatch: # getriggerd door cron-job.org elke 30 minuten
 
 concurrency:
   group: tracker
