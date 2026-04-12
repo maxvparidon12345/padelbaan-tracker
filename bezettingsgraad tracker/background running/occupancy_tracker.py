@@ -208,7 +208,7 @@ def slots_to_check(close_hour: int = CLOSE_HOUR) -> list[datetime]:
     return [
         base + timedelta(minutes=i * SLOT_STEP_MINUTES)
         for i in range(SLOTS_TO_CHECK)
-        if base + timedelta(minutes=i * SLOT_STEP_MINUTES) <= close
+        if base + timedelta(minutes=i * SLOT_STEP_MINUTES) + timedelta(minutes=60) <= close
     ]
 
 
