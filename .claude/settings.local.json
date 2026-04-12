@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:meetandplay.nl)",
+      "WebFetch(domain:racketiq.meetandplay.nl)",
+      "Bash(curl -s 'https://racketiq.meetandplay.nl/web/api/group/2013/v2/bookings/checkcart?from=11%3A00&to=24%3A00&camera=false&favourite=false&availability=1&date=2026-04-10' -H 'User-Agent: Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36' -H 'Accept: application/json')",
+      "Bash(python3 -m json.tool)",
+      "Bash(rm -f occupancy.db occupancy_summary.csv)",
+      "Bash(python3 occupancy_tracker.py --once --debug)",
+      "Bash(python3 -c ':*)",
+      "Bash(python3 occupancy_tracker.py --once)"
+    ]
+  }
+}

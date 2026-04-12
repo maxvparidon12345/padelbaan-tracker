@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Padel Occupancy Dashboard</title>
+  <meta http-equiv="refresh" content="1800">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f0f4f8;
+      color: #1e293b;
+      padding: 2rem 1.5rem;
+    }
+    header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    header h1 { font-size: 1.6rem; font-weight: 700; }
+    header .meta { font-size: 0.8rem; color: #64748b; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .card-venue { font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+                   letter-spacing: .06em; color: #64748b; margin-bottom: .25rem; }
+    .card-avg   { font-size: 2.4rem; font-weight: 700; line-height: 1; margin-bottom: .2rem; }
+    .card-label { font-size: 0.72rem; color: #94a3b8; margin-bottom: 1rem; }
+    .period-row { display: flex; justify-content: space-between;
+                   padding: .3rem 0; border-top: 1px solid #f1f5f9;
+                   font-size: .85rem; }
+    .period-name { color: #475569; }
+    .period-val  { font-weight: 600; }
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .chart-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+    .chart-box h2 { font-size: .95rem; font-weight: 600; margin-bottom: 1.25rem;
+                     color: #334155; }
+    .footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: .75rem;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Padel Occupancy Dashboard</h1>
+  <span class="meta">Generated 12 Apr 2026, 12:15 &nbsp;·&nbsp; 118 observations</span>
+</header>
+
+<div class="cards">
+  
+        <div class="card" style="border-top: 4px solid rgba(59,130,246,1);">
+          <div class="card-venue">Terwegen</div>
+          <div class="card-avg">71.4%</div>
+          <div class="card-label">overall avg occupancy</div>
+          <div class="card-periods">
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">70.8%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">49.5%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">93.8%</span></div>
+          </div>
+        </div>
+        
+        <div class="card" style="border-top: 4px solid rgba(16,185,129,1);">
+          <div class="card-venue">Vinkenveld</div>
+          <div class="card-avg">81.5%</div>
+          <div class="card-label">overall avg occupancy</div>
+          <div class="card-periods">
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">100.0%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">62.5%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">82.0%</span></div>
+          </div>
+        </div>
+        
+</div>
+
+<div class="charts">
+  <div class="chart-box">
+    <h2>Average occupancy by time of day</h2>
+    <canvas id="barChart"></canvas>
+  </div>
+  <div class="chart-box">
+    <h2>Occupancy by 30-minute slot</h2>
+    <canvas id="lineChart"></canvas>
+  </div>
+</div>
+
+<div class="footer">
+  Occupancy = courts booked ÷ total courts &nbsp;·&nbsp;
+  Morning 08–12 &nbsp;·&nbsp; Afternoon 12–17 &nbsp;·&nbsp; Evening 17–23
+</div>
+
+<script>
+const barData = {
+  labels: ["Morning", "Afternoon", "Evening"],
+  datasets: [{"label": "Terwegen", "data": [70.8, 49.5, 93.8], "backgroundColor": "rgba(59,130,246,0.75)", "borderColor": "rgba(59,130,246,1)", "borderWidth": 2, "borderRadius": 6}, {"label": "Vinkenveld", "data": [100.0, 62.5, 82.0], "backgroundColor": "rgba(16,185,129,0.75)", "borderColor": "rgba(16,185,129,1)", "borderWidth": 2, "borderRadius": 6}],
+};
+
+const lineData = {
+  labels: ["10:30", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"],
+  datasets: [{"label": "Terwegen", "data": [87.5, 62.5, 75.0, 68.8, 50.0, 25.0, 37.5, 25.0, 37.5, 87.5, 33.3, 62.5, 95.8, 54.2, 95.8, 100.0, 93.8, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0], "borderColor": "rgba(59,130,246,1)", "backgroundColor": "rgba(59,130,246,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}, {"label": "Vinkenveld", "data": [100.0, 100.0, 100.0, 87.5, 100.0, 100.0, 50.0, 75.0, 25.0, 25.0, 25.0, 41.7, 58.3, 75.0, 50.0, 87.5, 75.0, 100.0, 100.0, 100.0, 75.0, 100.0, 100.0, 100.0], "borderColor": "rgba(16,185,129,1)", "backgroundColor": "rgba(16,185,129,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}],
+};
+
+const commonScales = {
+  y: {
+    min: 0, max: 100,
+    ticks: { callback: v => v + "%" },
+    grid: { color: "#f1f5f9" },
+  },
+  x: { grid: { display: false } },
+};
+
+new Chart(document.getElementById("barChart"), {
+  type: "bar",
+  data: barData,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: "top" },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y ?? "—"}%` } },
+    },
+    scales: commonScales,
+  },
+});
+
+new Chart(document.getElementById("lineChart"), {
+  type: "line",
+  data: lineData,
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: "top" },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y ?? "—"}%` } },
+    },
+    scales: commonScales,
+  },
+});
+</script>
+
+</body>
+</html>

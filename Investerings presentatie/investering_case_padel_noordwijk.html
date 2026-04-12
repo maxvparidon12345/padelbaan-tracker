@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Investering Case – Indoor Padelcentrum Noordwijk</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #1a7a4a;
+    --green-light: #e8f5ee;
+    --green-mid: #2ecc71;
+    --dark: #0f1923;
+    --grey: #6b7280;
+    --light: #f9fafb;
+    --border: #e5e7eb;
+    --accent: #f59e0b;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #dde1e7;
+    color: var(--dark);
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+
+  .page {
+    width: 297mm;
+    min-height: 210mm;
+    background: white;
+    margin: 12mm auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    page-break-after: always;
+    overflow: hidden;
+  }
+
+  /* ── PAGE 1 HEADER ── */
+  .p1-header {
+    background: var(--dark);
+    padding: 20px 34px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .p1-header h1 {
+    font-size: 21pt;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .p1-header h1 span { color: var(--green-mid); }
+  .p1-header p { color: #9ca3af; font-size: 8.5pt; margin-top: 4px; }
+  .badge {
+    background: var(--green);
+    color: white;
+    padding: 5px 14px;
+    border-radius: 24px;
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── HERO STRIP ── */
+  .hero-strip {
+    display: flex;
+    background: var(--green-light);
+    border-bottom: 2px solid var(--green);
+  }
+  .hero-stat {
+    flex: 1;
+    padding: 11px 14px;
+    text-align: center;
+    border-right: 1px solid rgba(26,122,74,0.2);
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat .hs-num { font-size: 18pt; font-weight: 900; color: var(--green); line-height: 1; }
+  .hero-stat .hs-lbl { font-size: 7pt; color: var(--grey); margin-top: 2px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+
+  /* ── BODY GRID ── */
+  .p1-body { display: grid; grid-template-columns: 1.08fr 0.92fr; flex: 1; }
+  .p1-col { padding: 16px 24px; }
+  .p1-col:first-child { border-right: 1px solid var(--border); }
+
+  .section-title {
+    font-size: 7.5pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--green);
+    margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 2px;
+    background: var(--green);
+  }
+
+  /* ── POPULATION CARDS ── */
+  .pop-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; margin-bottom: 12px; }
+  .pop-card {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 10px;
+  }
+  .pop-card .pc-val { font-size: 13pt; font-weight: 900; color: var(--dark); line-height: 1; }
+  .pop-card .pc-lbl { font-size: 7pt; color: var(--grey); margin-top: 2px; font-weight: 500; }
+  .pop-card.highlight { background: var(--green); border-color: var(--green); }
+  .pop-card.highlight .pc-val,
+  .pop-card.highlight .pc-lbl { color: white; }
+
+  /* ── COMPETITOR TABLE ── */
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 11px; }
+  .comp-table thead th {
+    background: var(--dark);
+    color: white;
+    padding: 5px 9px;
+    text-align: left;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .comp-table tbody td { padding: 6px 9px; border-bottom: 1px solid var(--border); }
+  .comp-table tbody tr:last-child td { border-bottom: none; font-weight: 700; background: #f3f4f6; }
+  .comp-table tbody tr.competitor td { background: #fff7ed; }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 6.5pt;
+    font-weight: 700;
+  }
+  .tag-outdoor { background: #fef3c7; color: #92400e; }
+  .tag-indoor  { background: #dbeafe; color: #1e40af; }
+  .tag-rival   { background: #fee2e2; color: #991b1b; }
+  .tag-nieuw   { background: #d1fae5; color: #065f46; }
+
+  /* ── INSIGHT BOXES ── */
+  .ibox {
+    border-radius: 7px;
+    padding: 9px 12px;
+    margin-bottom: 10px;
+  }
+  .ibox-amber {
+    background: linear-gradient(135deg,#fff7ed,#fef3c7);
+    border: 1.5px solid var(--accent);
+  }
+  .ibox-green {
+    background: linear-gradient(135deg,#f0fdf4,#d1fae5);
+    border: 1.5px solid var(--green);
+  }
+  .ibox-dark { background: var(--dark); }
+  .ibox-title {
+    font-size: 7.5pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .ibox-amber .ibox-title { color: #92400e; }
+  .ibox-green .ibox-title { color: #065f46; }
+  .ibox-dark .ibox-title  { color: var(--green-mid); }
+  .ibox-text { font-size: 8pt; line-height: 1.5; }
+  .ibox-amber .ibox-text { color: #78350f; }
+  .ibox-green .ibox-text  { color: #134e4a; }
+  .ibox-dark .ibox-text   { color: #d1d5db; }
+
+  /* ── STAT PILLS ── */
+  .stat-row { display: flex; gap: 6px; margin-bottom: 10px; }
+  .stat-pill {
+    flex: 1;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 8px;
+    text-align: center;
+  }
+  .stat-pill .sp-num { font-size: 13pt; font-weight: 900; color: var(--green); }
+  .stat-pill .sp-lbl { font-size: 6.5pt; color: var(--grey); margin-top: 1px; }
+
+  /* ── BULLET LIST ── */
+  .bullet-list { list-style: none; margin-bottom: 10px; }
+  .bullet-list li {
+    font-size: 8pt;
+    color: #374151;
+    padding: 3px 0 3px 14px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    line-height: 1.4;
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before { content: '→'; color: var(--green); font-weight: 700; position: absolute; left: 0; }
+  .bullet-list li strong { color: var(--dark); }
+
+  /* ── PAGE FOOTER ── */
+  .page-footer {
+    background: var(--light);
+    border-top: 1px solid var(--border);
+    padding: 7px 34px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7pt;
+    color: var(--grey);
+  }
+  .page-footer strong { color: var(--dark); font-weight: 700; }
+
+  /* ═══════════ PAGE 2 ═══════════ */
+
+  .p2-header {
+    background: var(--green);
+    padding: 14px 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .p2-header h2 { font-size: 14pt; font-weight: 800; color: white; }
+  .p2-header p  { font-size: 8pt; color: rgba(255,255,255,0.75); }
+
+  .p2-body { display: grid; grid-template-columns: 1fr 1fr; flex: 1; }
+  .p2-col  { padding: 16px 24px; }
+  .p2-col:first-child { border-right: 1px solid var(--border); }
+
+  /* ── CAPEX TABLE ── */
+  .capex-table { width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 12px; }
+  .capex-table td { padding: 5px 8px; border-bottom: 1px solid var(--border); }
+  .capex-table td:last-child { text-align: right; font-weight: 600; }
+  .capex-table tr.subtotal td { background: #f3f4f6; font-weight: 700; font-size: 7.5pt; color: var(--grey); }
+  .capex-table tr.total td { background: var(--dark); color: white; font-weight: 800; border: none; }
+  .capex-table tr.total td:last-child { color: var(--green-mid); }
+
+  /* ── SCENARIO TABLE ── */
+  .scenario-table { width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 12px; }
+  .scenario-table thead th {
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid var(--border);
+    color: var(--grey);
+  }
+  .scenario-table tbody td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
+  .scenario-table tr.sc-cons td { background: #fef9f9; }
+  .scenario-table tr.sc-real td { background: #f0fdf4; font-weight: 700; }
+  .scenario-table tr.sc-opti td { background: #eff6ff; }
+
+  .sb { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 6.5pt; font-weight: 700; }
+  .sb-cons { background: #fee2e2; color: #991b1b; }
+  .sb-real { background: #d1fae5; color: #065f46; }
+  .sb-opti { background: #dbeafe; color: #1e40af; }
+
+  /* ── REVENUE BREAKDOWN ── */
+  .rev-section { margin-bottom: 12px; }
+  .rev-stream {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 8px 11px;
+    margin-bottom: 6px;
+  }
+  .rev-stream-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .rs-name { font-size: 8pt; font-weight: 700; color: var(--dark); }
+  .rs-range { font-size: 8pt; font-weight: 800; color: var(--green); }
+  .rs-lines { font-size: 7pt; color: var(--grey); line-height: 1.6; }
+  .rs-line  { display: flex; justify-content: space-between; }
+  .rs-line span:last-child { font-weight: 600; color: #374151; }
+
+  /* ── RETURN CARDS ── */
+  .return-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; margin-bottom: 12px; }
+  .return-card {
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px;
+    text-align: center;
+  }
+  .return-card .rc-val { font-size: 15pt; font-weight: 900; color: var(--green); line-height: 1; }
+  .return-card .rc-lbl { font-size: 6.5pt; color: var(--grey); margin-top: 3px; }
+  .return-card.featured { background: var(--green); border-color: var(--green); }
+  .return-card.featured .rc-val,
+  .return-card.featured .rc-lbl { color: white; }
+
+  /* ── RISK ROW ── */
+  .risk-row { display: flex; gap: 7px; margin-bottom: 7px; }
+  .risk-item {
+    flex: 1;
+    background: var(--light);
+    border-radius: 6px;
+    padding: 7px 9px;
+    border-left: 3px solid;
+    font-size: 7.5pt;
+    line-height: 1.4;
+  }
+  .risk-mid { border-color: var(--accent); }
+  .risk-low { border-color: var(--green); }
+  .risk-item strong { display: block; font-weight: 700; margin-bottom: 2px; font-size: 7pt; text-transform: uppercase; letter-spacing: 0.3px; }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; width: 297mm; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════╗ -->
+<!-- ║                     PAGE 1                      ║ -->
+<!-- ╚══════════════════════════════════════════════════╝ -->
+<div class="page">
+
+  <div class="p1-header">
+    <div>
+      <h1>Indoor <span>Padelcentrum</span> Noordwijk</h1>
+      <p>Investering Case &nbsp;·&nbsp; 6 banen &nbsp;·&nbsp; April 2026</p>
+    </div>
+    <div class="badge">Vertrouwelijk</div>
+  </div>
+
+  <!-- HERO STRIP -->
+  <div class="hero-strip">
+    <div class="hero-stat">
+      <div class="hs-num">876.000</div>
+      <div class="hs-lbl">Padelspelers NL (2025)</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-num">+60%</div>
+      <div class="hs-lbl">Groei spelers '24→'25</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-num">60%</div>
+      <div class="hs-lbl">Gem. bezetting indoor NL</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-num">~185.000</div>
+      <div class="hs-lbl">Inwoners catchment area</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-num">1 : 15.400</div>
+      <div class="hs-lbl">Indoor baan per inwoner (regio)</div>
+    </div>
+  </div>
+
+  <div class="p1-body">
+
+    <!-- ── LINKER KOLOM: MARKTONDERZOEK ── -->
+    <div class="p1-col">
+
+      <div class="section-title">Marktonderzoek – Inwoners Catchment Area (15 km)</div>
+
+      <div class="pop-grid">
+        <div class="pop-card">
+          <div class="pc-val">46.500</div>
+          <div class="pc-lbl">Gemeente Noordwijk</div>
+        </div>
+        <div class="pop-card">
+          <div class="pc-val">67.200</div>
+          <div class="pc-lbl">Gemeente Katwijk</div>
+        </div>
+        <div class="pop-card">
+          <div class="pc-val">~35.000</div>
+          <div class="pc-lbl">Teylingen (Lisse, Sassenheim, Voorhout)</div>
+        </div>
+        <div class="pop-card highlight">
+          <div class="pc-val">~185.000</div>
+          <div class="pc-lbl">Totaal catchment area</div>
+        </div>
+      </div>
+
+      <div class="section-title">Huidig Aanbod Padelbanen – Regio</div>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Locatie</th>
+            <th>Banen</th>
+            <th>Type</th>
+            <th>Positie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="competitor">
+            <td><strong>Terwegen Indoor</strong> · Sassenheim</td>
+            <td><strong>8</strong></td>
+            <td><span class="tag tag-indoor">Indoor</span></td>
+            <td><span class="tag tag-rival">Grootste concurrent</span></td>
+          </tr>
+          <tr>
+            <td>Tennishal Vinkenveld · Noordwijk</td>
+            <td><strong>4</strong></td>
+            <td><span class="tag tag-indoor">Indoor</span></td>
+            <td>Vol / wachttijden</td>
+          </tr>
+          <tr>
+            <td>Padel Katwijk</td>
+            <td><strong>4</strong></td>
+            <td><span class="tag tag-outdoor">Outdoor</span></td>
+            <td>Seizoensgebonden</td>
+          </tr>
+          <tr>
+            <td>Padel Lisse</td>
+            <td><strong>4</strong></td>
+            <td><span class="tag tag-outdoor">Outdoor</span></td>
+            <td>Seizoensgebonden</td>
+          </tr>
+          <tr>
+            <td><strong>Nieuw centrum Noordwijk</strong></td>
+            <td><strong>6</strong></td>
+            <td><span class="tag tag-indoor">Indoor</span></td>
+            <td><span class="tag tag-nieuw">Dit project</span></td>
+          </tr>
+          <tr>
+            <td><strong>Totaal regio</strong></td>
+            <td><strong>26</strong> (incl. project)</td>
+            <td>—</td>
+            <td>12 van 20 outdoor</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="ibox ibox-amber">
+        <div class="ibox-title">⚡ Marktgap – Waar ligt de kans?</div>
+        <div class="ibox-text">
+          <strong>NL gemiddeld:</strong> 1 padelbaan per ~6.370 inwoners. <strong>Regio totaal:</strong> 1 per ~9.250 — al ondervoorzien.<br>
+          Kritischer: Terwegen (8 indoor banen) ligt in <strong>Sassenheim</strong>, primair gericht op <strong>Leiden-corridor</strong>.
+          De kustgemeenten Noordwijk + Katwijk (113.000 inwoners) hebben slechts <strong>4 eigen indoor banen</strong> —
+          1 per 28.000 inwoners. <strong>Dat is het gat.</strong>
+        </div>
+      </div>
+
+      <div class="ibox ibox-green">
+        <div class="ibox-title">Concurrentieanalyse Terwegen</div>
+        <div class="ibox-text">
+          Terwegen is gevestigd en succesvol, maar: <strong>15–20 min rijden</strong> vanuit Noordwijk/Katwijk.
+          Spelers in de kustgemeenten kiezen voor het dichtstbijzijnde kwalitatieve alternatief.
+          Een centrum <em>in</em> Noordwijk pakt de lokale vraag af die nu naar Sassenheim lekt of afhaakt.
+        </div>
+      </div>
+
+    </div><!-- end linker kolom -->
+
+    <!-- ── RECHTER KOLOM: GROEI & KANS ── -->
+    <div class="p1-col">
+
+      <div class="section-title">Nationale Groei – Padel NL</div>
+      <div class="stat-row">
+        <div class="stat-pill">
+          <div class="sp-num">+60%</div>
+          <div class="sp-lbl">Spelers groei<br>'24 → '25</div>
+        </div>
+        <div class="stat-pill">
+          <div class="sp-num">+25%</div>
+          <div class="sp-lbl">Nieuwe banen<br>in 2025</div>
+        </div>
+        <div class="stat-pill">
+          <div class="sp-num">+23%</div>
+          <div class="sp-lbl">Comm. centra<br>groei 2024</div>
+        </div>
+      </div>
+
+      <div class="ibox ibox-green" style="margin-bottom:10px;">
+        <div class="ibox-title">Voorbij de hype – EY/KNLTB 2026</div>
+        <div class="ibox-text">
+          <em>"Padel is geen hype meer — het is een volwassen sport."</em>
+          Vraag blijft aanbod overtreffen. Gevestigde indoor centra realiseren gemiddeld
+          <strong>60% bezettingsgraad</strong>; piektijden (avond/weekend) zijn vaak structureel volgeboekt.
+        </div>
+      </div>
+
+      <div class="section-title">De Kans – Waarom Noordwijk, Waarom Nu</div>
+      <ul class="bullet-list">
+        <li><strong>Geen eigen indoor centrum</strong> voor 113K kustinwoners (Noordwijk + Katwijk)</li>
+        <li><strong>Vinkenveld zit vol</strong> — wachttijden bewijzen onvervulde vraag</li>
+        <li><strong>Terwegen is 15–20 min rijden</strong> — genoeg afstand voor lokale speler</li>
+        <li><strong>Hoog gemiddeld inkomen</strong> in regio — hogere spend & loyaliteit</li>
+        <li><strong>Veel 25–45 jarigen</strong> — kern van de Nederlandse padelspeler</li>
+        <li><strong>8 van 12 outdoor banen</strong> in regio → indoor is uniek aanbod</li>
+        <li><strong>First mover</strong> in Noordwijk/Katwijk — community lock-in vóór concurrentie</li>
+        <li><strong>Eigen grond</strong> = cashflow én vermogensopbouw op de lange termijn</li>
+      </ul>
+
+      <div class="section-title">Concept</div>
+      <div class="ibox ibox-dark">
+        <div class="ibox-title">Indoor Padelcentrum – 6 banen, eigen grond</div>
+        <div class="ibox-text">
+          Hal van ~2.000–2.500 m² op eigen grond (€300K). Zes moderne indoor padelbanen.
+          Vaste prijs <strong>€30/uur</strong> – toegankelijk en transparant.
+          Horeca, shop en events versterken beleving en verhogen omzet per bezoeker.
+          Community-first aanpak: leagues, clinics en bedrijfsabonnementen voor
+          stabiele basisbezetting.
+        </div>
+      </div>
+
+    </div><!-- end rechter kolom -->
+
+  </div><!-- end p1-body -->
+
+  <div class="page-footer">
+    <span><strong>Indoor Padelcentrum Noordwijk</strong> &nbsp;·&nbsp; Investering Case April 2026</span>
+    <span>Pagina 1 van 2</span>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════╗ -->
+<!-- ║                     PAGE 2                      ║ -->
+<!-- ╚══════════════════════════════════════════════════╝ -->
+<div class="page">
+
+  <div class="p2-header">
+    <div>
+      <h2>Financieel Model &amp; Rendement</h2>
+      <p>6 banen · Eigen grond · Vaste prijs €30/uur · Capaciteit 35.040 uur/jaar</p>
+    </div>
+    <div class="badge" style="background:rgba(255,255,255,0.18); border:1.5px solid rgba(255,255,255,0.4);">Eigen grond + exploitatie</div>
+  </div>
+
+  <div class="p2-body">
+
+    <!-- ── LINKER KOLOM ── -->
+    <div class="p2-col">
+
+      <div class="section-title">Investering (CapEx)</div>
+      <table class="capex-table">
+        <tbody>
+          <tr><td>Grondaankoop</td><td>€ 300.000</td></tr>
+          <tr><td>6 banen (constructie, glas, vloer, kunstgras)</td><td>€ 210.000 – 300.000</td></tr>
+          <tr class="subtotal"><td>Indoor hal / staalconstructie</td><td>€ 800.000 – 1.200.000</td></tr>
+          <tr><td>Verlichting (LED)</td><td>€ 30.000 – 60.000</td></tr>
+          <tr><td>Kleedkamers &amp; douches</td><td>€ 50.000 – 150.000</td></tr>
+          <tr><td>Horeca-inrichting</td><td>€ 30.000 – 100.000</td></tr>
+          <tr><td>Reserveringssysteem &amp; overig</td><td>€ 5.000 – 15.000</td></tr>
+          <tr class="total"><td>Totale investering (all-in)</td><td>€ 1.425K – € 2.125K</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">Scenario-Analyse Baanomzet</div>
+      <p style="font-size:7pt; color:var(--grey); margin-bottom:7px;">
+        6 banen × 16u/dag × 365d = <strong>35.040 uur capaciteit/jaar</strong> @ €30/u &nbsp;·&nbsp;
+        NL indoor gem. bezetting = 60% (EY/KNLTB 2024)
+      </p>
+      <table class="scenario-table">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Bezetting</th>
+            <th>Uren verkocht</th>
+            <th>Baanomzet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sc-cons">
+            <td><span class="sb sb-cons">Conservatief</span></td>
+            <td>45%</td>
+            <td>15.768</td>
+            <td><strong>€ 473.040</strong></td>
+          </tr>
+          <tr class="sc-real">
+            <td><span class="sb sb-real">Realistisch ✓</span></td>
+            <td>60% <em style="font-size:6.5pt;font-weight:400;color:var(--grey);">(NL gem.)</em></td>
+            <td>21.024</td>
+            <td><strong>€ 630.720</strong></td>
+          </tr>
+          <tr class="sc-opti">
+            <td><span class="sb sb-opti">Optimistisch</span></td>
+            <td>70% <em style="font-size:6.5pt;font-weight:400;color:var(--grey);">(+10%)</em></td>
+            <td>24.528</td>
+            <td><strong>€ 735.840</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">Extra Omzetstromen – Onderbouwing</div>
+
+      <!-- STREAM 1: Horeca -->
+      <div class="rev-stream">
+        <div class="rev-stream-header">
+          <div class="rs-name">1. Horeca / F&amp;B</div>
+          <div class="rs-range">€ 126K – 196K / jaar</div>
+        </div>
+        <div class="rs-lines">
+          <div class="rs-line"><span>4 spelers per baan-uur (standaard)</span></div>
+          <div class="rs-line"><span>Gem. besteding per speler: €3,50 (drankje + snack)</span></div>
+          <div class="rs-line"><span>Koopbereidheid: ~70% van bezoekers</span></div>
+          <div class="rs-line"><span>= €3,50 × 70% × 4 spelers</span><span>≈ €9,80 / baan-uur</span></div>
+          <div class="rs-line"><span>Realistisch: 21.024 uur × €9,80 (marge ~55%)</span><span>→ <strong>€ 113K netto</strong></span></div>
+        </div>
+      </div>
+
+      <!-- STREAM 2: Shop -->
+      <div class="rev-stream">
+        <div class="rev-stream-header">
+          <div class="rs-name">2. Verhuur &amp; Shop</div>
+          <div class="rs-range">€ 32K – 42K / jaar</div>
+        </div>
+        <div class="rs-lines">
+          <div class="rs-line"><span>Racketverhuur: 2 sets/baan/dag × 6 banen × €5 × 300d</span><span>€ 18.000</span></div>
+          <div class="rs-line"><span>Ballenverkoop: 1 doos/baan/dag × 6 × €7 × 300d</span><span>€ 12.600</span></div>
+          <div class="rs-line"><span>Merchandise, grips, accessoires</span><span>€ 5.000</span></div>
+          <div class="rs-line"><span><strong>Subtotaal (marge ~60%)</strong></span><span><strong>→ € 21K – 28K netto</strong></span></div>
+        </div>
+      </div>
+
+      <!-- STREAM 3: Events -->
+      <div class="rev-stream">
+        <div class="rev-stream-header">
+          <div class="rs-name">3. Events &amp; Competities</div>
+          <div class="rs-range">€ 38K – 52K / jaar</div>
+        </div>
+        <div class="rs-lines">
+          <div class="rs-line"><span>Toernooien: 20/jaar × gem. €500 netto inschrijfgeld</span><span>€ 10.000</span></div>
+          <div class="rs-line"><span>Clinics: 4/week × 48w × €150 × 30% rev-share</span><span>€ 8.640</span></div>
+          <div class="rs-line"><span>Bedrijfsuitjes: 2/mnd × 12m × €250 netto</span><span>€ 6.000</span></div>
+          <div class="rs-line"><span>Seizoenscompetitie: 80 teams × €150 inschrijving</span><span>€ 12.000</span></div>
+          <div class="rs-line"><span>Sponsoring lokale bedrijven</span><span>€ 5.000</span></div>
+        </div>
+      </div>
+
+    </div><!-- end linker kolom p2 -->
+
+    <!-- ── RECHTER KOLOM ── -->
+    <div class="p2-col">
+
+      <div class="section-title">Totale Omzet per Scenario (incl. extra stromen)</div>
+
+      <table class="scenario-table" style="margin-bottom:12px;">
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>Baan</th>
+            <th>F&amp;B netto</th>
+            <th>Shop &amp; Events</th>
+            <th>Totaal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sc-cons">
+            <td><span class="sb sb-cons">45%</span></td>
+            <td>€ 473K</td>
+            <td>€ 83K</td>
+            <td>€ 55K</td>
+            <td><strong>~ € 611K</strong></td>
+          </tr>
+          <tr class="sc-real">
+            <td><span class="sb sb-real">60% ✓</span></td>
+            <td>€ 631K</td>
+            <td>€ 113K</td>
+            <td>€ 65K</td>
+            <td><strong>~ € 809K</strong></td>
+          </tr>
+          <tr class="sc-opti">
+            <td><span class="sb sb-opti">70%</span></td>
+            <td>€ 736K</td>
+            <td>€ 132K</td>
+            <td>€ 75K</td>
+            <td><strong>~ € 943K</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">Rendement – Realistisch Scenario</div>
+      <div class="return-grid">
+        <div class="return-card">
+          <div class="rc-val">€ 809K</div>
+          <div class="rc-lbl">Totale omzet / jaar</div>
+        </div>
+        <div class="return-card featured">
+          <div class="rc-val">~ €480K</div>
+          <div class="rc-lbl">EBITDA / jaar<br><span style="font-size:6pt;opacity:.8;">(na OpEx ~€330K)</span></div>
+        </div>
+        <div class="return-card">
+          <div class="rc-val">3–4 jr</div>
+          <div class="rc-lbl">Payback period<br><span style="font-size:6pt;color:#9ca3af;">op midpoint inv.</span></div>
+        </div>
+      </div>
+
+      <div class="ibox ibox-green" style="margin-bottom:10px;">
+        <div class="ibox-title">Dubbel Rendement Model</div>
+        <div class="ibox-text">
+          Door <strong>grond in eigendom</strong> bouw je naast cashflow ook vermogenswaarde op.
+          Een volledig operationeel indoor padelcentrum op eigen grond vertegenwoordigt
+          aanzienlijke vastgoedwaarde — los van de jaarlijkse EBITDA.
+          OpEx: energie €70–100K · personeel €120–150K · marketing &amp; overig €40–60K → totaal ~€330K/jaar.
+        </div>
+      </div>
+
+      <div class="section-title">Kritische Succesfactoren</div>
+      <ul class="bullet-list" style="margin-bottom:10px;">
+        <li><strong>Bezetting ≥ 60% vanaf maand 6</strong> — launch events + direct bedrijfsabonnementen</li>
+        <li><strong>Bouwkosten beheersen (€35–50K/baan)</strong> — zelf bouwen = 30–40% goedkoper</li>
+        <li><strong>Community vanaf dag 1</strong> — leagues, clinics, vaste slots → lage churn</li>
+        <li><strong>Lokale differentiatie vs. Terwegen</strong> — dichter bij, eigen identiteit, coastal feel</li>
+      </ul>
+
+      <div class="section-title">Risico's &amp; Mitigatie</div>
+      <div class="risk-row">
+        <div class="risk-item risk-mid">
+          <strong>Hoge CapEx</strong>
+          Gefaseerd financieren: grond + hal eerst, banen in 2 fases. Co-investeerder of bancaire financiering op asset-basis.
+        </div>
+        <div class="risk-item risk-low">
+          <strong>Trage opstart</strong>
+          Pre-sales vóór opening. Wachtlijst opbouwen via socials. Soft-opening met 3 banen.
+        </div>
+      </div>
+      <div class="risk-row">
+        <div class="risk-item risk-low">
+          <strong>Energiekosten</strong>
+          LED + zonnepanelen op hal-dak. Energiecontract lang vastleggen bij signing.
+        </div>
+        <div class="risk-item risk-low">
+          <strong>Concurrentie Terwegen</strong>
+          Geografisch voordeel (15 min dichter bij Noordwijk/Katwijk). Community lock-in moeilijk te kopiëren.
+        </div>
+      </div>
+
+    </div><!-- end rechter kolom p2 -->
+
+  </div><!-- end p2-body -->
+
+  <div class="page-footer">
+    <span>
+      <strong>Indoor Padelcentrum Noordwijk</strong> &nbsp;·&nbsp; Investering Case 2026 &nbsp;·&nbsp;
+      Bronnen: CBS, EY/KNLTB Padel Monitor 2025–2026, Padelgids.nl, AlleCijfers.nl, Terwegen.nl
+    </span>
+    <span>Pagina 2 van 2</span>
+  </div>
+
+</div><!-- end page 2 -->
+
+</body>
+</html>

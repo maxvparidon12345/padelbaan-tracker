@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+bezettingsgraad tracker/background running/occupancy.log
+debug_vinkenveld_*.png

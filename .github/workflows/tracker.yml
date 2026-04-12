@@ -1,0 +1,55 @@
+name: Padel Occupancy Tracker
+
+on:
+  schedule:
+    # Elke 30 minuten van 05:45 t/m 21:15 UTC = 07:45 t/m 23:15 NL zomertijd (CEST)
+    - cron: '15,45 5-20 * * *'
+    - cron: '15 21 * * *'
+  workflow_dispatch: # ook handmatig te starten via GitHub
+
+concurrency:
+  group: tracker
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Python instellen
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache Playwright browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-v1
+
+      - name: Afhankelijkheden installeren
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: Tracker uitvoeren
+        working-directory: "bezettingsgraad tracker/background running"
+        run: python3 occupancy_tracker.py --once
+
+      - name: Data opslaan in repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "bezettingsgraad tracker/occupancy_summary.csv" \
+                  "bezettingsgraad tracker/background running/occupancy.db" \
+                  "bezettingsgraad tracker/occupancy_dashboard.html"
+          git diff --staged --quiet || git commit -m "data: $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
