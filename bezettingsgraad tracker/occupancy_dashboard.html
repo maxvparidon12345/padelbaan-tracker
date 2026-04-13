@@ -68,26 +68,26 @@
 
 <header>
   <h1>Padel Occupancy Dashboard</h1>
-  <span class="meta">Generated 13 Apr 2026, 05:46 &nbsp;·&nbsp; 59 observations</span>
+  <span class="meta">Generated 13 Apr 2026, 06:16 &nbsp;·&nbsp; 61 observations</span>
 </header>
 
 <div class="cards">
   
         <div class="card" style="border-top: 4px solid rgba(59,130,246,1);">
           <div class="card-venue">Terwegen</div>
-          <div class="card-avg">54.0%</div>
+          <div class="card-avg">51.9%</div>
           <div class="card-label">overall avg occupancy</div>
           <div class="card-periods">
-            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">25.0%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">90.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">46.9%</span></div>
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">18.8%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">90.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">46.9%</span></div>
           </div>
         </div>
         
         <div class="card" style="border-top: 4px solid rgba(16,185,129,1);">
           <div class="card-venue">Vinkenveld</div>
-          <div class="card-avg">11.5%</div>
+          <div class="card-avg">15.7%</div>
           <div class="card-label">overall avg occupancy</div>
           <div class="card-periods">
-            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">0.0%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">5.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">29.5%</span></div>
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">12.5%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">5.0%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">29.5%</span></div>
           </div>
         </div>
         
@@ -112,12 +112,12 @@
 <script>
 const barData = {
   labels: ["Morning", "Afternoon", "Evening"],
-  datasets: [{"label": "Terwegen", "data": [25.0, 90.0, 46.9], "backgroundColor": "rgba(59,130,246,0.75)", "borderColor": "rgba(59,130,246,1)", "borderWidth": 2, "borderRadius": 6}, {"label": "Vinkenveld", "data": [0.0, 5.0, 29.5], "backgroundColor": "rgba(16,185,129,0.75)", "borderColor": "rgba(16,185,129,1)", "borderWidth": 2, "borderRadius": 6}],
+  datasets: [{"label": "Terwegen", "data": [18.8, 90.0, 46.9], "backgroundColor": "rgba(59,130,246,0.75)", "borderColor": "rgba(59,130,246,1)", "borderWidth": 2, "borderRadius": 6}, {"label": "Vinkenveld", "data": [12.5, 5.0, 29.5], "backgroundColor": "rgba(16,185,129,0.75)", "borderColor": "rgba(16,185,129,1)", "borderWidth": 2, "borderRadius": 6}],
 };
 
 const lineData = {
-  labels: ["08:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"],
-  datasets: [{"label": "Terwegen", "data": [25.0, 100.0, 100.0, 87.5, 87.5, 75.0, 37.5, 100.0, 25.0, 25.0, null, null, null, null, null, null, null], "borderColor": "rgba(59,130,246,1)", "backgroundColor": "rgba(59,130,246,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}, {"label": "Vinkenveld", "data": [0.0, 0.0, 0.0, 0.0, 0.0, 25.0, 25.0, 0.0, 0.0, 0.0, 0.0, 25.0, 25.0, 25.0, 25.0, 100.0, 100.0], "borderColor": "rgba(16,185,129,1)", "backgroundColor": "rgba(16,185,129,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}],
+  labels: ["08:00", "08:30", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"],
+  datasets: [{"label": "Terwegen", "data": [25.0, 12.5, 100.0, 100.0, 87.5, 87.5, 75.0, 37.5, 100.0, 25.0, 25.0, null, null, null, null, null, null, null], "borderColor": "rgba(59,130,246,1)", "backgroundColor": "rgba(59,130,246,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}, {"label": "Vinkenveld", "data": [0.0, 25.0, 0.0, 0.0, 0.0, 0.0, 25.0, 25.0, 0.0, 0.0, 0.0, 0.0, 25.0, 25.0, 25.0, 25.0, 100.0, 100.0], "borderColor": "rgba(16,185,129,1)", "backgroundColor": "rgba(16,185,129,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}],
 };
 
 const commonScales = {
