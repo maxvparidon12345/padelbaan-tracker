@@ -68,17 +68,17 @@
 
 <header>
   <h1>Padel Occupancy Dashboard</h1>
-  <span class="meta">Generated 09 May 2026, 15:15 &nbsp;·&nbsp; 2338 observations</span>
+  <span class="meta">Generated 09 May 2026, 15:45 &nbsp;·&nbsp; 2340 observations</span>
 </header>
 
 <div class="cards">
   
         <div class="card" style="border-top: 4px solid rgba(59,130,246,1);">
           <div class="card-venue">Terwegen</div>
-          <div class="card-avg">58.7%</div>
+          <div class="card-avg">58.6%</div>
           <div class="card-label">overall avg occupancy</div>
           <div class="card-periods">
-            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">46.5%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">40.9%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">88.6%</span></div>
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">46.5%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">40.9%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">88.3%</span></div>
           </div>
         </div>
         
@@ -87,7 +87,7 @@
           <div class="card-avg">42.0%</div>
           <div class="card-label">overall avg occupancy</div>
           <div class="card-periods">
-            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">33.7%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">27.5%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">64.9%</span></div>
+            <div class="period-row"><span class="period-name">Morning</span><span class="period-val">33.7%</span></div><div class="period-row"><span class="period-name">Afternoon</span><span class="period-val">27.5%</span></div><div class="period-row"><span class="period-name">Evening</span><span class="period-val">64.7%</span></div>
           </div>
         </div>
         
@@ -112,12 +112,12 @@
 <script>
 const barData = {
   labels: ["Morning", "Afternoon", "Evening"],
-  datasets: [{"label": "Terwegen", "data": [46.5, 40.9, 88.6], "backgroundColor": "rgba(59,130,246,0.75)", "borderColor": "rgba(59,130,246,1)", "borderWidth": 2, "borderRadius": 6}, {"label": "Vinkenveld", "data": [33.7, 27.5, 64.9], "backgroundColor": "rgba(16,185,129,0.75)", "borderColor": "rgba(16,185,129,1)", "borderWidth": 2, "borderRadius": 6}],
+  datasets: [{"label": "Terwegen", "data": [46.5, 40.9, 88.3], "backgroundColor": "rgba(59,130,246,0.75)", "borderColor": "rgba(59,130,246,1)", "borderWidth": 2, "borderRadius": 6}, {"label": "Vinkenveld", "data": [33.7, 27.5, 64.7], "backgroundColor": "rgba(16,185,129,0.75)", "borderColor": "rgba(16,185,129,1)", "borderWidth": 2, "borderRadius": 6}],
 };
 
 const lineData = {
   labels: ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00"],
-  datasets: [{"label": "Terwegen", "data": [16.2, 46.8, 41.8, 59.6, 56.5, 57.0, 51.0, 45.2, 40.4, 39.4, 25.5, 34.1, 28.4, 39.4, 39.3, 49.6, 55.8, 57.2, 68.8, 73.1, 73.6, 95.7, 88.6, 99.4, 99.4, 100.0, 98.1, 100.0, 91.9], "borderColor": "rgba(59,130,246,1)", "backgroundColor": "rgba(59,130,246,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}, {"label": "Vinkenveld", "data": [11.1, 24.1, 39.4, 43.3, 45.0, 41.0, 36.5, 31.7, 27.9, 24.0, 26.0, 26.0, 26.9, 28.7, 22.3, 25.9, 28.8, 38.5, 41.3, 44.2, 56.0, 63.5, 74.1, 79.6, 79.6, 76.0, 69.4, 76.9, 51.9], "borderColor": "rgba(16,185,129,1)", "backgroundColor": "rgba(16,185,129,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}],
+  datasets: [{"label": "Terwegen", "data": [16.2, 46.8, 41.8, 59.6, 56.5, 57.0, 51.0, 45.2, 40.4, 39.4, 25.5, 34.1, 28.4, 39.4, 39.3, 49.6, 55.8, 57.2, 68.8, 73.1, 71.8, 95.7, 88.6, 99.4, 99.4, 100.0, 98.1, 100.0, 91.9], "borderColor": "rgba(59,130,246,1)", "backgroundColor": "rgba(59,130,246,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}, {"label": "Vinkenveld", "data": [11.1, 24.1, 39.4, 43.3, 45.0, 41.0, 36.5, 31.7, 27.9, 24.0, 26.0, 26.0, 26.9, 28.7, 22.3, 25.9, 28.8, 38.5, 41.3, 44.2, 53.8, 63.5, 74.1, 79.6, 79.6, 76.0, 69.4, 76.9, 51.9], "borderColor": "rgba(16,185,129,1)", "backgroundColor": "rgba(16,185,129,0.75)", "tension": 0.35, "pointRadius": 4, "fill": false, "spanGaps": true}],
 };
 
 const commonScales = {
