@@ -6873,3 +6873,5 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-07-01T11:45:53.852124,Terwegen,12:00,8,1,12.5,"booked: Padelbaan 4; available: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
 2026-07-01T12:15:54.920356,Terwegen,12:30,8,1,12.5,"booked: Padelbaan 6; available: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 7,Padelbaan 8"
 2026-07-01T12:15:54.920356,Vinkenveld,12:30,4,2,50.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2; available: Padelbaan 3,Padelbaan 4"
+2026-07-01T12:46:04.779333,Terwegen,13:00,8,1,12.5,"booked: Padelbaan 6; available: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 7,Padelbaan 8"
+2026-07-01T12:46:04.779333,Vinkenveld,13:00,4,2,50.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2; available: Padelbaan 3,Padelbaan 4"
