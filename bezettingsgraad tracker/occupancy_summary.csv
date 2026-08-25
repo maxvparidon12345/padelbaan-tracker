@@ -12544,16 +12544,25 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-08-25T19:49:00.472579,Plaza Padel Laren,20:00,10,10,100.0,"booked: Baan 1. de Publieke Partner,Baan 2. Elektricien Louwmans,Baan 3. RA12 't Gooi,Baan 4.,Baan 5. BEEPR,Baan 6.,Baan 7. Yanmar,Baan 8.,Baan 9. Sky Radio,Parkeerbaan"
 2026-08-25T19:49:00.472579,Terwegen,20:00,8,8,100.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
 2026-08-25T19:49:00.472579,Vinkenveld,20:00,4,4,100.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
+2026-08-25T20:04:47.038001,Lake Seven,20:30,12,11,91.7,available: Padelbaan 5 buiten; 11 unknown
+2026-08-25T20:04:47.038001,Padelclub Rotterdam - Feyenoord,20:30,6,6,100.0,booked: Feijenoord 6 (outdoor) - Upcourt; 5 unknown
+2026-08-25T20:04:47.038001,Padelclub Rotterdam - Terbregge,20:30,15,15,100.0,"booked: Terbregge 3 - Holland Padel,Terbregge 7 (outdoor); 13 unknown"
+2026-08-25T20:04:47.038001,Padelclub Rotterdam - Victoria,20:30,3,3,100.0,booked: Victoria 2; 2 unknown
+2026-08-25T20:04:47.038001,Peakz Padel Haarlem,20:30,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
+2026-08-25T20:04:47.038001,Peakz Padel Heemskerk,20:30,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
+2026-08-25T20:04:47.038001,Peakz Padel Utrecht Vechtsebanen,20:30,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
+2026-08-25T20:04:47.038001,Terwegen,20:30,8,8,100.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
+2026-08-25T20:04:47.038001,Vinkenveld,20:30,4,4,100.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
 2026-08-25T20:08:59.426502,The Padellers Uitgeest,20:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
-2026-08-25T20:12:18.164614,Terwegen,20:30,8,8,100.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
-2026-08-25T20:12:18.164614,Vinkenveld,20:30,4,4,100.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
-2026-08-25T20:12:18.164614,Padelclub Rotterdam - Terbregge,20:30,15,15,100.0,"booked: Terbregge 3 - Holland Padel,Terbregge 6 - Strik op de Dijk,Terbregge 7 (outdoor); 12 unknown"
-2026-08-25T20:12:18.164614,Padelclub Rotterdam - Feyenoord,20:30,6,6,100.0,booked: Feijenoord 6 (outdoor) - Upcourt; 5 unknown
-2026-08-25T20:12:18.164614,Padelife Rottemeren,20:30,6,4,66.7,"booked: Panoramic 1 - Active Health Group,Panoramic 3,Panoramic 4,Panoramic 6 - Kompas Groep; available: Panoramic 2 - R W | HORECA GROEP,Panoramic 5"
-2026-08-25T20:12:18.164614,Padelclub Rotterdam - Victoria,20:30,3,3,100.0,booked: Victoria 2; 2 unknown
 2026-08-25T20:12:18.164614,Lake Seven,20:30,12,11,91.7,available: Padelbaan 5 buiten; 11 unknown
-2026-08-25T20:12:18.164614,Peakz Padel Heemskerk,20:30,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
+2026-08-25T20:12:18.164614,Padelclub Rotterdam - Feyenoord,20:30,6,6,100.0,booked: Feijenoord 6 (outdoor) - Upcourt; 5 unknown
+2026-08-25T20:12:18.164614,Padelclub Rotterdam - Terbregge,20:30,15,15,100.0,"booked: Terbregge 3 - Holland Padel,Terbregge 6 - Strik op de Dijk,Terbregge 7 (outdoor); 12 unknown"
+2026-08-25T20:12:18.164614,Padelclub Rotterdam - Victoria,20:30,3,3,100.0,booked: Victoria 2; 2 unknown
+2026-08-25T20:12:18.164614,Padelife Rottemeren,20:30,6,4,66.7,"booked: Panoramic 1 - Active Health Group,Panoramic 3,Panoramic 4,Panoramic 6 - Kompas Groep; available: Panoramic 2 - R W | HORECA GROEP,Panoramic 5"
 2026-08-25T20:12:18.164614,Peakz Padel Haarlem,20:30,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
-2026-08-25T20:12:18.164614,The Padellers Uitgeest,20:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
-2026-08-25T20:12:18.164614,Plaza Padel Laren,20:30,10,10,100.0,"booked: Baan 1. de Publieke Partner,Baan 2. Elektricien Louwmans,Baan 3. RA12 't Gooi,Baan 4.,Baan 5. BEEPR,Baan 6.,Baan 7. Yanmar,Baan 8.,Baan 9. Sky Radio,Parkeerbaan"
+2026-08-25T20:12:18.164614,Peakz Padel Heemskerk,20:30,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
 2026-08-25T20:12:18.164614,Peakz Padel Utrecht Vechtsebanen,20:30,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
+2026-08-25T20:12:18.164614,Plaza Padel Laren,20:30,10,10,100.0,"booked: Baan 1. de Publieke Partner,Baan 2. Elektricien Louwmans,Baan 3. RA12 't Gooi,Baan 4.,Baan 5. BEEPR,Baan 6.,Baan 7. Yanmar,Baan 8.,Baan 9. Sky Radio,Parkeerbaan"
+2026-08-25T20:12:18.164614,Terwegen,20:30,8,8,100.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
+2026-08-25T20:12:18.164614,The Padellers Uitgeest,20:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
+2026-08-25T20:12:18.164614,Vinkenveld,20:30,4,4,100.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
