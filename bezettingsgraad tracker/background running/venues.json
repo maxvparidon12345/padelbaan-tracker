@@ -1,0 +1,495 @@
+{
+  "_comment": [
+    "Clubconfiguratie voor de bezettingsgraad-tracker.",
+    "Een nieuwe club toevoegen = een blok hieronder toevoegen; er hoeft geen Python aangepast te worden.",
+    "",
+    "Velden:",
+    "  naam            unieke sleutel; komt zo in de CSV en het dashboard te staan",
+    "  regio           zoekgebied uit locatiekaart/kansenkaart_padel.py ('Voorhout e.o.' = de oorspronkelijke twee)",
+    "  soort           indoor | outdoor | gemengd",
+    "  enabled         false = overslaan (zie 'notitie' voor de reden)",
+    "  platform        bepaalt welke scraper draait: racketiq | livewire | playtomic | foys | padelos",
+    "  platform_config platformspecifieke ID's en URL's",
+    "  total_courts    noemer voor het bezettingspercentage",
+    "  close_hours     sluitingsuur per weekdag, index 0=maandag .. 6=zondag",
+    "  known_courts    startlijst met baannamen; de scraper vult zichzelf aan met wat hij tegenkomt"
+  ],
+  "venues": [
+    {
+      "naam": "Terwegen",
+      "regio": "Voorhout e.o.",
+      "soort": "indoor",
+      "enabled": true,
+      "platform": "racketiq",
+      "platform_config": {
+        "api_url": "https://racketiq.meetandplay.nl/web/api/group/2013/v2/bookings/checkcart?from={from_time}&to={to_time}&camera=false&favourite=false&availability=1&date={date}"
+      },
+      "total_courts": 8,
+      "slot_step_minutes": 60,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        20,
+        19
+      ],
+      "known_courts": [
+        "Padelbaan 1 (Panorama court)",
+        "Padelbaan 2",
+        "Padelbaan 3",
+        "Padelbaan 4",
+        "Padelbaan 5",
+        "Padelbaan 6",
+        "Padelbaan 7",
+        "Padelbaan 8"
+      ],
+      "notitie": ""
+    },
+    {
+      "naam": "Vinkenveld",
+      "regio": "Voorhout e.o.",
+      "soort": "indoor",
+      "enabled": true,
+      "platform": "livewire",
+      "platform_config": {
+        "club_id": 88165
+      },
+      "total_courts": 4,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [
+        "Padelbaan 1 / PURE Tennis & Padel",
+        "Padelbaan 2",
+        "Padelbaan 3",
+        "Padelbaan 4"
+      ],
+      "notitie": ""
+    },
+    {
+      "naam": "Padelclub Rotterdam - Terbregge",
+      "regio": "IJssel-corridor",
+      "soort": "gemengd",
+      "enabled": true,
+      "platform": "padelos",
+      "platform_config": {
+        "company_id": 192,
+        "club_id": "216886"
+      },
+      "total_courts": 15,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        22,
+        18
+      ],
+      "known_courts": [],
+      "notitie": "6 indoor + 9 outdoor waarvan 7 overkapt."
+    },
+    {
+      "naam": "Padelclub Rotterdam - Feyenoord",
+      "regio": "IJssel-corridor",
+      "soort": "indoor",
+      "enabled": true,
+      "platform": "padelos",
+      "platform_config": {
+        "company_id": 192,
+        "club_id": "216885"
+      },
+      "total_courts": 6,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        22,
+        18
+      ],
+      "known_courts": [],
+      "notitie": ""
+    },
+    {
+      "naam": "Padelife Rottemeren",
+      "regio": "IJssel-corridor",
+      "soort": "indoor",
+      "enabled": true,
+      "platform": "playtomic",
+      "platform_config": {
+        "tenant_id": "80cbaa95-a3ab-4034-a0d5-dede9400b796",
+        "slug": "padelife-rottemeren"
+      },
+      "total_courts": 6,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": ""
+    },
+    {
+      "naam": "Padelclub Rotterdam - Victoria",
+      "regio": "IJssel-corridor",
+      "soort": "outdoor",
+      "enabled": true,
+      "platform": "padelos",
+      "platform_config": {
+        "company_id": 192,
+        "club_id": "216884"
+      },
+      "total_courts": 3,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        22,
+        18
+      ],
+      "known_courts": [],
+      "notitie": ""
+    },
+    {
+      "naam": "Lake Seven",
+      "regio": "IJssel-corridor",
+      "soort": "gemengd",
+      "enabled": true,
+      "platform": "livewire",
+      "platform_config": {
+        "club_id": 77405
+      },
+      "total_courts": 12,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        20,
+        20
+      ],
+      "known_courts": [],
+      "notitie": "5 indoor + 7 outdoor."
+    },
+    {
+      "naam": "LTC Plaswijck",
+      "regio": "IJssel-corridor",
+      "soort": "outdoor",
+      "enabled": false,
+      "platform": "knltb_clubapp",
+      "platform_config": {},
+      "total_courts": 4,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "Reserveren kan alleen via de KNLTB ClubApp en alleen voor leden; geen publieke beschikbaarheidspagina."
+    },
+    {
+      "naam": "Peakz Padel Heemskerk",
+      "regio": "IJmuiden / Velsen",
+      "soort": "indoor",
+      "enabled": true,
+      "platform": "foys",
+      "platform_config": {
+        "organisation_id": "df82f4dd-fd87-4af5-9c2f-656fe1a44357",
+        "location_id": "31111774-d83a-4e8a-bce7-df49b1c25d29"
+      },
+      "total_courts": 8,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        21,
+        21
+      ],
+      "known_courts": [],
+      "notitie": ""
+    },
+    {
+      "naam": "Peakz Padel Haarlem",
+      "regio": "IJmuiden / Velsen",
+      "soort": "outdoor",
+      "enabled": true,
+      "platform": "foys",
+      "platform_config": {
+        "organisation_id": "df82f4dd-fd87-4af5-9c2f-656fe1a44357",
+        "location_id": "f5b45a7e-3e05-4b86-bb73-8a01dbb27ae9"
+      },
+      "total_courts": 4,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        21,
+        21
+      ],
+      "known_courts": [],
+      "notitie": "Locatie Haarlemmerstroom; outdoor ondanks dat Peakz vooral indoor is."
+    },
+    {
+      "naam": "The Padellers Uitgeest",
+      "regio": "IJmuiden / Velsen",
+      "soort": "indoor",
+      "enabled": false,
+      "platform": "bookaball",
+      "platform_config": {
+        "location_id": 7
+      },
+      "total_courts": 6,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        21,
+        21
+      ],
+      "known_courts": [],
+      "notitie": "Bookaball geeft per tijdslot alleen 'wel/niet beschikbaar', geen baannamen of aantal vrije banen. Levert dus geen bezettingspercentage."
+    },
+    {
+      "naam": "LTC De Heerenduinen",
+      "regio": "IJmuiden / Velsen",
+      "soort": "outdoor",
+      "enabled": false,
+      "platform": "livewire",
+      "platform_config": {
+        "club_id": 30056
+      },
+      "total_courts": 6,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "KNLTB-vereniging: zet maar een deel van de banen publiek op Meet & Play, de rest gaat via de ClubApp naar leden. Het aandeel publieke banen is onbekend, dus total_courts is de verkeerde noemer en het percentage staat structureel op 100%."
+    },
+    {
+      "naam": "Groeneveen Tennis en Padel",
+      "regio": "IJmuiden / Velsen",
+      "soort": "outdoor",
+      "enabled": false,
+      "platform": "livewire",
+      "platform_config": {
+        "club_id": 29850
+      },
+      "total_courts": 10,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "KNLTB-vereniging: zet maar een deel van de banen publiek op Meet & Play, de rest gaat via de ClubApp naar leden. Het aandeel publieke banen is onbekend, dus total_courts is de verkeerde noemer en het percentage staat structureel op 100%."
+    },
+    {
+      "naam": "LTC Hofgeest",
+      "regio": "IJmuiden / Velsen",
+      "soort": "outdoor",
+      "enabled": false,
+      "platform": "livewire",
+      "platform_config": {
+        "club_id": 29942
+      },
+      "total_courts": 6,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "KNLTB-vereniging: zet maar een deel van de banen publiek op Meet & Play, de rest gaat via de ClubApp naar leden. Het aandeel publieke banen is onbekend, dus total_courts is de verkeerde noemer en het percentage staat structureel op 100%."
+    },
+    {
+      "naam": "Plaza Padel Laren",
+      "regio": "Hilversum-Zuid / Nieuw-Loosdrecht",
+      "soort": "indoor",
+      "enabled": true,
+      "platform": "playtomic",
+      "platform_config": {
+        "tenant_id": "a6828872-4562-4606-9195-359466489aa9",
+        "slug": "plaza-padel-laren"
+      },
+      "total_courts": 10,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        20,
+        20
+      ],
+      "known_courts": [],
+      "notitie": "9 padelbanen plus een 'Parkeerbaan' die Playtomic als padelbaan meetelt."
+    },
+    {
+      "naam": "Peakz Padel Utrecht Vechtsebanen",
+      "regio": "Hilversum-Zuid / Nieuw-Loosdrecht",
+      "soort": "indoor",
+      "enabled": true,
+      "platform": "foys",
+      "platform_config": {
+        "organisation_id": "df82f4dd-fd87-4af5-9c2f-656fe1a44357",
+        "location_id": "d9b0cde9-9ab6-4859-87b3-563c7ba1ccb9"
+      },
+      "total_courts": 14,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        21,
+        21
+      ],
+      "known_courts": [],
+      "notitie": ""
+    },
+    {
+      "naam": "Padelclub Bussum",
+      "regio": "Hilversum-Zuid / Nieuw-Loosdrecht",
+      "soort": "indoor",
+      "enabled": false,
+      "platform": "baanreserveren",
+      "platform_config": {
+        "subdomain": "bussum"
+      },
+      "total_courts": 4,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "baanreserveren.nl toont beschikbaarheid pas na inloggen met een account."
+    },
+    {
+      "naam": "Tennis en Padel de Rading",
+      "regio": "Hilversum-Zuid / Nieuw-Loosdrecht",
+      "soort": "outdoor",
+      "enabled": false,
+      "platform": "livewire",
+      "platform_config": {
+        "club_id": 80994
+      },
+      "total_courts": 4,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "KNLTB-vereniging: zet maar een deel van de banen publiek op Meet & Play, de rest gaat via de ClubApp naar leden. Het aandeel publieke banen is onbekend, dus total_courts is de verkeerde noemer en het percentage staat structureel op 100%."
+    },
+    {
+      "naam": "Gooische Vallei",
+      "regio": "Hilversum-Zuid / Nieuw-Loosdrecht",
+      "soort": "outdoor",
+      "enabled": false,
+      "platform": "knltb_clubapp",
+      "platform_config": {},
+      "total_courts": 6,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "Reserveren kan alleen via de KNLTB ClubApp en alleen voor leden; geen publieke beschikbaarheidspagina."
+    },
+    {
+      "naam": "HLTC Gooiland",
+      "regio": "Hilversum-Zuid / Nieuw-Loosdrecht",
+      "soort": "outdoor",
+      "enabled": false,
+      "platform": "knltb_clubapp",
+      "platform_config": {},
+      "total_courts": 1,
+      "slot_step_minutes": 30,
+      "close_hours": [
+        23,
+        23,
+        23,
+        23,
+        23,
+        23,
+        23
+      ],
+      "known_courts": [],
+      "notitie": "Eén padelbaan, alleen voor leden via de KNLTB ClubApp."
+    }
+  ]
+}

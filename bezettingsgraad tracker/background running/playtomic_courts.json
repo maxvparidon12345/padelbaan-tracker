@@ -1,0 +1,28 @@
+{
+  "plaza-padel-laren": {
+    "fetched_at": "2026-08-25T18:39:57.365188",
+    "courts": {
+      "4b729797-b1ee-4c78-abf1-77c1bb7010e0": "Baan 1. de Publieke Partner",
+      "18e5fd04-8c1e-4761-85df-2c6b4e9d05c9": "Baan 2. Elektricien Louwmans",
+      "18f80b65-5f2f-4bb6-9c19-1e756907ef2c": "Baan 3. RA12 't Gooi",
+      "e6f38f5b-63bd-4f8d-b181-90941e905b09": "Baan 4.",
+      "9aaea900-eaae-4018-8167-01a220eb05c5": "Baan 5. BEEPR",
+      "c360fea2-737b-4580-9395-f97ff7559f51": "Baan 6.",
+      "de236697-0f6a-4851-9973-e0fa681fab8f": "Baan 7. Yanmar",
+      "7b850a01-b0cf-4993-b09f-6959853969dc": "Baan 8.",
+      "c0a9b95a-fef0-4cd8-8d62-2b48dd60c0eb": "Baan 9. Sky Radio",
+      "b13b6af7-dc15-404a-845a-8a7822e1720b": "Parkeerbaan"
+    }
+  },
+  "padelife-rottemeren": {
+    "fetched_at": "2026-08-25T19:32:19.799945",
+    "courts": {
+      "160634a8-3473-439d-b3c2-6f4c798b8211": "Panoramic 1 - Active Health Group",
+      "9dee4824-2c46-45af-be33-69fd46249562": "Panoramic 2 - R W | HORECA GROEP",
+      "980eed80-149c-4256-803b-86b14b7405af": "Panoramic 3",
+      "1e2dcfa3-cf50-4823-b7f3-426d591f33e9": "Panoramic 4",
+      "7549862a-f9dd-4734-86c4-f02ddbc0e505": "Panoramic 5",
+      "387287dd-4c25-424d-8af2-318027ba6fef": "Panoramic 6 - Kompas Groep"
+    }
+  }
+}

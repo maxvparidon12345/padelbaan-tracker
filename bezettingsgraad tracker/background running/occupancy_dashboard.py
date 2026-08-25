@@ -16,8 +16,7 @@ from pathlib import Path
 
 CSV_PATH = Path(__file__).parent.parent / "occupancy_summary.csv"
 HTML_PATH = Path(__file__).parent.parent / "occupancy_dashboard.html"
-
-VENUES = ["Terwegen", "Vinkenveld"]
+VENUES_PATH = Path(__file__).parent / "venues.json"
 
 PERIODS = {
     "Morning":   ( 8, 12),   # 08:00 – 12:00
@@ -25,10 +24,32 @@ PERIODS = {
     "Evening":   (17, 23),   # 17:00 – 23:00
 }
 
-VENUE_COLORS = {
-    "Terwegen":   {"bg": "rgba(59,130,246,0.75)",  "border": "rgba(59,130,246,1)"},
-    "Vinkenveld": {"bg": "rgba(16,185,129,0.75)",  "border": "rgba(16,185,129,1)"},
-}
+
+def load_venue_config() -> list[dict]:
+    """The enabled clubs from venues.json — the same file the tracker reads."""
+    with VENUES_PATH.open(encoding="utf-8") as f:
+        return [v for v in json.load(f)["venues"] if v.get("enabled", True)]
+
+
+VENUE_CONFIG = load_venue_config()
+# Group by region so clubs from the same search area sit next to each other.
+VENUES = [v["naam"] for v in sorted(VENUE_CONFIG, key=lambda v: (v["regio"], v["naam"]))]
+VENUE_REGIO = {v["naam"]: v["regio"] for v in VENUE_CONFIG}
+
+
+def _venue_colors() -> dict:
+    """Spread hues evenly so every club gets a distinct colour without a hand-kept map."""
+    n = max(len(VENUES), 1)
+    return {
+        venue: {
+            "bg": f"hsla({round(i * 360 / n)}, 65%, 55%, 0.75)",
+            "border": f"hsl({round(i * 360 / n)}, 65%, 45%)",
+        }
+        for i, venue in enumerate(VENUES)
+    }
+
+
+VENUE_COLORS = _venue_colors()
 
 
 # ---------------------------------------------------------------------------
@@ -148,6 +169,7 @@ def render(averages: dict, slot_avgs: dict, n_rows: int) -> str:
         border_color = c["border"]
         cards_html += f"""
         <div class="card" style="border-top: 4px solid {border_color};">
+          <div class="card-regio">{VENUE_REGIO.get(venue, "")}</div>
           <div class="card-venue">{venue}</div>
           <div class="card-avg">{overall(venue)}</div>
           <div class="card-label">overall avg occupancy</div>
@@ -199,8 +221,10 @@ def render(averages: dict, slot_avgs: dict, n_rows: int) -> str:
       padding: 1.25rem 1.5rem;
       box-shadow: 0 1px 4px rgba(0,0,0,.08);
     }}
-    .card-venue {{ font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-                   letter-spacing: .06em; color: #64748b; margin-bottom: .25rem; }}
+    .card-regio {{ font-size: 0.65rem; font-weight: 600; text-transform: uppercase;
+                   letter-spacing: .08em; color: #94a3b8; margin-bottom: .3rem; }}
+    .card-venue {{ font-size: 0.95rem; font-weight: 700; color: #1e293b;
+                   margin-bottom: .4rem; line-height: 1.25; }}
     .card-avg   {{ font-size: 2.4rem; font-weight: 700; line-height: 1; margin-bottom: .2rem; }}
     .card-label {{ font-size: 0.72rem; color: #94a3b8; margin-bottom: 1rem; }}
     .period-row {{ display: flex; justify-content: space-between;

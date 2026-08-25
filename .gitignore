@@ -3,4 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 bezettingsgraad tracker/background running/occupancy.log
-debug_vinkenveld_*.png
+# De ruwe database groeit hard en werd elke 30 min opnieuw gecommit; de CSV
+# houdt per scrape al de booked/available-lijst per baan bij in de notes-kolom.
+bezettingsgraad tracker/background running/occupancy.db
+debug_*.png

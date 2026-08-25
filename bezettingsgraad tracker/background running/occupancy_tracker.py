@@ -2,17 +2,26 @@
 """
 Padel Court Occupancy Tracker
 ==============================
-Estimates padel court occupancy at Terwegen and Vinkenveld by checking
-booking availability every 15 minutes and storing observations in SQLite.
+Estimates padel court occupancy by checking booking availability every 15
+minutes and storing observations in SQLite.
 
-Terwegen   — RacketIQ platform: direct API call, no browser needed.
-Vinkenveld — MeetAndPlay Livewire: Playwright DOM scraping.
+Which clubs are tracked is configured in venues.json — not in this file. Each
+club names a *platform*, and every platform has one scraper here:
+
+    racketiq   — RacketIQ checkcart API            (HTTP, geen browser)
+    playtomic  — Playtomic availability API        (HTTP, geen browser)
+    foys       — FOYS court-booking API (Peakz)    (HTTP, geen browser)
+    padelos    — PadelOS searchByDate API          (HTTP, geen browser)
+    livewire   — KNLTB Meet & Play clubpagina      (Playwright DOM scraping)
+
+Een nieuwe club op een bestaand platform toevoegen = een blok in venues.json;
+deze module hoeft dan niet gewijzigd te worden.
 
 Usage:
-    python occupancy_tracker.py            # Run continuously every 15 minutes
-    python occupancy_tracker.py --once     # Single scrape then exit
-    python occupancy_tracker.py --debug    # Verbose logging + Vinkenveld screenshot
-    python occupancy_tracker.py --once --debug
+    python occupancy_tracker.py                      # Run continuously every 15 minutes
+    python occupancy_tracker.py --once               # Single scrape then exit
+    python occupancy_tracker.py --debug              # Verbose logging + screenshots
+    python occupancy_tracker.py --venue Terwegen     # Alleen deze club (herhaalbaar)
 """
 
 import asyncio
@@ -21,6 +30,7 @@ import json
 import logging
 import sqlite3
 import sys
+import time
 import urllib.request
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -33,34 +43,23 @@ from playwright.async_api import async_playwright, Page
 # Configuration
 # ---------------------------------------------------------------------------
 
-TERWEGEN_API = (
-    "https://racketiq.meetandplay.nl/web/api/group/2013/v2/bookings/checkcart"
-    "?from={from_time}&to={to_time}&camera=false&favourite=false&availability=1&date={date}"
-)
-VINKENVELD_URL = "https://meetandplay.nl/club/88165?sport=padel"
+VENUES_PATH = Path(__file__).parent / "venues.json"
 
-VENUES = {
-    "Terwegen": {
-        "total_courts": 8,
-        "type": "racketiq",
-        "slot_step_minutes": 60,
-        # close_hours: index 0=Mon … 4=Fri, 5=Sat, 6=Sun
-        "close_hours": [23, 23, 23, 23, 23, 20, 19],
-        "known_courts": [
-            "Padelbaan 1 (Panorama court)", "Padelbaan 2", "Padelbaan 3",
-            "Padelbaan 4", "Padelbaan 5", "Padelbaan 6", "Padelbaan 7", "Padelbaan 8",
-        ],
-    },
-    "Vinkenveld": {
-        "total_courts": 4,
-        "type": "livewire",
-        "slot_step_minutes": 30,
-        "close_hours": [23, 23, 23, 23, 23, 23, 23],
-        "known_courts": [
-            "Padelbaan 1 / PURE Tennis & Padel", "Padelbaan 2", "Padelbaan 3", "Padelbaan 4",
-        ],
-    },
-}
+# Hoeveel clubs tegelijk worden opgehaald. Alles tegelijk laten lopen verzadigt
+# de verbinding en levert DNS- en timeoutfouten op.
+BROWSER_CONCURRENCY = 3
+HTTP_CONCURRENCY = 4
+
+
+def load_venues() -> dict:
+    """Read venues.json and return {naam: config} for the enabled clubs only."""
+    with VENUES_PATH.open(encoding="utf-8") as f:
+        raw = json.load(f)
+    return {v["naam"]: v for v in raw["venues"] if v.get("enabled", True)}
+
+
+VENUES = load_venues()
+
 
 def venue_close_hour(venue: str, dt: Optional[datetime] = None) -> int:
     """Return the closing hour for *venue* on the given day (default: today)."""
@@ -68,7 +67,7 @@ def venue_close_hour(venue: str, dt: Optional[datetime] = None) -> int:
         dt = _now()
     return VENUES[venue]["close_hours"][dt.weekday()]
 
-DB_PATH = Path("occupancy.db")
+DB_PATH = Path(__file__).parent / "occupancy.db"
 CSV_PATH = Path(__file__).parent.parent / "occupancy_summary.csv"
 OPEN_HOUR   = 7   # first snapshot at 07:45 — checks the 08:00 opening slot
 OPEN_MINUTE = 45
@@ -91,6 +90,20 @@ def _now() -> datetime:
 
 DEBUG = "--debug" in sys.argv
 RUN_ONCE = "--once" in sys.argv
+
+
+def _venue_filter() -> Optional[set]:
+    """Parse --venue <naam> flags; return None when no filter was given."""
+    names = set()
+    for i, arg in enumerate(sys.argv):
+        if arg == "--venue" and i + 1 < len(sys.argv):
+            names.add(sys.argv[i + 1])
+        elif arg.startswith("--venue="):
+            names.add(arg.split("=", 1)[1])
+    return names or None
+
+
+VENUE_FILTER = _venue_filter()
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -221,10 +234,66 @@ def today_str() -> str:
 
 
 # ---------------------------------------------------------------------------
-# Terwegen — RacketIQ checkcart API
+# HTTP helper
 # ---------------------------------------------------------------------------
 
-def fetch_terwegen_slot(date: str, slot_dt: datetime) -> tuple[set[str], set[str]]:
+def http_json(url: str, headers: Optional[dict] = None, payload: Optional[dict] = None,
+              timeout: int = 30, attempts: int = 3):
+    """
+    GET (or POST when *payload* is given) a JSON endpoint and return the parsed body.
+
+    Retries on transient network errors: with a dozen clubs fetching at once, DNS
+    and connection timeouts are common and almost always succeed on a second try.
+    """
+    hdrs = {"User-Agent": USER_AGENT, "Accept": "application/json"}
+    hdrs.update(headers or {})
+    body = None
+    if payload is not None:
+        body = json.dumps(payload).encode()
+        hdrs["Content-Type"] = "application/json"
+
+    last: Exception = RuntimeError("no attempt made")
+    for attempt in range(1, attempts + 1):
+        try:
+            req = urllib.request.Request(url, headers=hdrs, data=body)
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return json.loads(resp.read())
+        except Exception as exc:
+            last = exc
+            if attempt < attempts:
+                time.sleep(2 * attempt)
+                log.debug("retry %d/%d for %s: %s", attempt, attempts, url[:80], exc)
+    raise last
+
+
+def build_observations(venue: str, target_slots: list[datetime],
+                       available: dict[str, set[str]],
+                       seen_courts: set[str]) -> list[dict]:
+    """
+    Turn a per-slot set of available court names into observation rows.
+
+    *available* maps "HH:MM" -> set of court names free at that slot. Any court that
+    is known but not in that set counts as booked — the same assumption the tracker
+    has always made for platforms that only publish free slots.
+    """
+    known = set(get_known_courts(venue)) | seen_courts
+    rows = []
+    for slot_dt in target_slots:
+        free = available.get(fmt(slot_dt), set())
+        for court in known | free:
+            rows.append({
+                "court_name": court,
+                "slot_time": slot_dt,
+                "available": court in free,
+            })
+    return rows
+
+
+# ---------------------------------------------------------------------------
+# RacketIQ checkcart API  (Terwegen)
+# ---------------------------------------------------------------------------
+
+def fetch_racketiq_slot(api_url: str, date: str, slot_dt: datetime) -> tuple[set[str], set[str]]:
     """
     Query the API for a specific 60-min slot.
     Returns (available_courts, all_courts_seen) — the API returns all courts including
@@ -234,10 +303,8 @@ def fetch_terwegen_slot(date: str, slot_dt: datetime) -> tuple[set[str], set[str
     to_hhmm = (slot_dt + timedelta(minutes=60)).strftime("%H:%M")
     from_enc = slot_hhmm.replace(":", "%3A")
     to_enc = to_hhmm.replace(":", "%3A")
-    url = TERWEGEN_API.format(date=date, from_time=from_enc, to_time=to_enc)
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        court_availability = json.loads(resp.read())["court_availability"]
+    url = api_url.format(date=date, from_time=from_enc, to_time=to_enc)
+    court_availability = http_json(url)["court_availability"]
 
     available: set[str] = set()
     all_courts: set[str] = set()
@@ -254,33 +321,233 @@ def fetch_terwegen_slot(date: str, slot_dt: datetime) -> tuple[set[str], set[str
     return available, all_courts
 
 
-def scrape_terwegen(target_slots: list[datetime]) -> list[dict]:
-    """
-    Scrape Terwegen: one API call per target slot to get exact availability.
-    Returns list of {court_name, slot_time, available}.
-    """
+def scrape_racketiq(venue: str, cfg: dict, target_slots: list[datetime]) -> list[dict]:
+    """One API call per target slot; the API reports booked courts too."""
+    api_url = cfg["platform_config"]["api_url"]
     date = today_str()
-    known_courts: set[str] = set(get_known_courts("Terwegen"))
+    known_courts: set[str] = set(get_known_courts(venue))
     results = []
 
     for slot_dt in target_slots:
         try:
-            available_courts, seen_courts = fetch_terwegen_slot(date, slot_dt)
+            available_courts, seen_courts = fetch_racketiq_slot(api_url, date, slot_dt)
             known_courts |= seen_courts  # discover courts even when they're booked
             for court in available_courts:
                 results.append({"court_name": court, "slot_time": slot_dt, "available": True})
             for court in known_courts - available_courts:
                 results.append({"court_name": court, "slot_time": slot_dt, "available": False})
         except Exception as exc:
-            log.error("[Terwegen] API call failed for slot %s: %s", fmt(slot_dt), exc, exc_info=DEBUG)
+            log.error("[%s] API call failed for slot %s: %s", venue, fmt(slot_dt), exc, exc_info=DEBUG)
 
-    log.debug("[Terwegen] %d observations across %d slots, %d courts known",
-              len(results), len(target_slots), len(known_courts))
+    log.debug("[%s] %d observations across %d slots, %d courts known",
+              venue, len(results), len(target_slots), len(known_courts))
     return results
 
 
 # ---------------------------------------------------------------------------
-# Vinkenveld — MeetAndPlay Livewire DOM scraping
+# Playtomic  (Padelife Rottemeren, Plaza Padel Laren)
+# ---------------------------------------------------------------------------
+
+_PLAYTOMIC_COURTS: dict[str, dict[str, str]] = {}
+PLAYTOMIC_CACHE_PATH = Path(__file__).parent / "playtomic_courts.json"
+PLAYTOMIC_CACHE_MAX_AGE_DAYS = 7
+
+
+def _fetch_playtomic_court_names(slug: str) -> dict[str, str]:
+    """Read the resource list out of the club page's server-rendered payload."""
+    import re
+    # The club page is ~350 kB and playtomic.com is often slow, so allow a long
+    # timeout and retry twice before giving up.
+    for attempt in (1, 2, 3):
+        try:
+            req = urllib.request.Request(f"https://playtomic.com/clubs/{slug}",
+                                         headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=90) as resp:
+                html = resp.read().decode("utf-8", errors="replace")
+            break
+        except Exception:
+            if attempt == 3:
+                raise
+            log.debug("[playtomic] retrying court-name fetch for %s", slug)
+            time.sleep(3 * attempt)
+
+    pairs = re.findall(
+        r'resourceId\\":\\"([0-9a-f-]{36})\\",\\"name\\":\\"(.*?)\\",\\"sport\\":\\"(\w+)\\"',
+        html)
+    return {rid: name.strip() for rid, name, sport in pairs if sport == "PADEL"}
+
+
+def playtomic_court_names(slug: str) -> dict[str, str]:
+    """
+    Map resource_id -> court name; the availability API returns UUIDs only.
+
+    Court names change rarely, so the map is cached on disk and only refreshed
+    weekly. That keeps the slow, failure-prone page fetch out of most cycles —
+    and a stale cache still beats losing a whole scrape.
+    """
+    if slug in _PLAYTOMIC_COURTS:
+        return _PLAYTOMIC_COURTS[slug]
+
+    cache = {}
+    if PLAYTOMIC_CACHE_PATH.exists():
+        try:
+            cache = json.loads(PLAYTOMIC_CACHE_PATH.read_text(encoding="utf-8"))
+        except Exception as exc:
+            log.warning("[playtomic] unreadable court cache, rebuilding: %s", exc)
+
+    entry = cache.get(slug)
+    fresh = False
+    if entry:
+        age = (_now() - datetime.fromisoformat(entry["fetched_at"])).days
+        fresh = age < PLAYTOMIC_CACHE_MAX_AGE_DAYS
+    if entry and fresh:
+        _PLAYTOMIC_COURTS[slug] = entry["courts"]
+        return entry["courts"]
+
+    try:
+        mapping = _fetch_playtomic_court_names(slug)
+    except Exception as exc:
+        if entry:
+            log.warning("[playtomic] refresh failed for %s, using stale cache: %s", slug, exc)
+            _PLAYTOMIC_COURTS[slug] = entry["courts"]
+            return entry["courts"]
+        raise
+
+    cache[slug] = {"fetched_at": _now().isoformat(), "courts": mapping}
+    PLAYTOMIC_CACHE_PATH.write_text(json.dumps(cache, indent=2, ensure_ascii=False),
+                                    encoding="utf-8")
+    _PLAYTOMIC_COURTS[slug] = mapping
+    return mapping
+
+
+def scrape_playtomic(venue: str, cfg: dict, target_slots: list[datetime]) -> list[dict]:
+    """One call returns the whole day's free slots per court resource."""
+    pc = cfg["platform_config"]
+    # Bail out rather than fall back to raw UUIDs: those would be stored as court
+    # names and permanently inflate the club's known-court list.
+    names = playtomic_court_names(pc["slug"])
+
+    data = http_json(
+        "https://playtomic.com/api/clubs/availability"
+        f"?tenant_id={pc['tenant_id']}&date={today_str()}&sport_id=PADEL"
+    )
+
+    available: dict[str, set[str]] = {}
+    for resource in data:
+        court = names.get(resource["resource_id"], resource["resource_id"])
+        for slot in resource.get("slots", []):
+            if int(slot.get("duration", 0)) != 60:
+                continue
+            available.setdefault(slot["start_time"][:5], set()).add(court)
+
+    return build_observations(venue, target_slots, available, set(names.values()))
+
+
+# ---------------------------------------------------------------------------
+# FOYS court-booking API  (Peakz Padel)
+# ---------------------------------------------------------------------------
+
+def scrape_foys(venue: str, cfg: dict, target_slots: list[datetime]) -> list[dict]:
+    """
+    One call returns every court with its full day of slots, each carrying an
+    explicit isAvailable flag — so booked courts are reported directly.
+    """
+    pc = cfg["platform_config"]
+    org = pc["organisation_id"]
+    data = http_json(
+        "https://api.foys.io/court-booking/public/api/v1/locations/search"
+        f"?reservationTypeId=6&locationId={pc['location_id']}"
+        f"&playingTimes%5B%5D=60&date={today_str()}T00:00",
+        headers={"x-organisationid": org, "x-federationid": org},
+    )
+    if not data:
+        log.warning("[%s] FOYS returned no location", venue)
+        return []
+
+    target_hhmm = {fmt(s) for s in target_slots}
+    slot_map = {fmt(s): s for s in target_slots}
+    rows, courts = [], set()
+    for item in data[0].get("inventoryItemsTimeSlots", []):
+        court = item["name"].strip()
+        courts.add(court)
+        for ts in item.get("timeSlots", []):
+            if int(ts.get("duration", 0)) != 60:
+                continue
+            hhmm = ts["startTime"][11:16]
+            if hhmm in target_hhmm:
+                rows.append({"court_name": court, "slot_time": slot_map[hhmm],
+                             "available": bool(ts.get("isAvailable"))})
+
+    log.debug("[%s] %d observations from %d courts", venue, len(rows), len(courts))
+    return rows
+
+
+# ---------------------------------------------------------------------------
+# PadelOS searchByDate  (Padelclub Rotterdam)
+# ---------------------------------------------------------------------------
+
+_PADELOS_CACHE: dict[tuple, dict] = {}
+
+
+def padelos_company_data(company_id, date: str) -> dict:
+    """
+    Fetch a whole PadelOS company once per cycle: one POST covers all its clubs.
+    Returns {club_id: club payload}.
+    """
+    key = (str(company_id), date)
+    if key in _PADELOS_CACHE:
+        return _PADELOS_CACHE[key]
+
+    clubs = http_json(f"https://api.padelos.co/customers/fetch-company-clubs/{company_id}",
+                      headers={"x-clubos-channel": "CLUBOS-WEB"})
+    club_ids = ",".join(str(r["id"]) for r in clubs["data"]["rows"])
+
+    body = http_json(
+        "https://api.padelos.co/customers/searchByDate",
+        headers={
+            "x-clubos-channel": "CLUBOS-WEB",
+            "x-clubos-company": str(company_id),
+            "x-clubos-domain": "PADELOSCO",
+            "x-clubos-club-info": club_ids,
+            "x-client-route": f"/company/{company_id}",
+            "version": "2.4",
+        },
+        payload={"date": date, "sport": "padel", "courtType": "", "courtSize": "",
+                 "courtTurf": "", "courtFeature": "", "searchTerm": "",
+                 "limit": "", "offset": "", "type": ""},
+    )
+    if not body.get("success"):
+        raise RuntimeError(f"PadelOS searchByDate failed: {body.get('data')}")
+
+    result = {str(c["id"]): c for c in body["data"]}
+    _PADELOS_CACHE[key] = result
+    return result
+
+
+def scrape_padelos(venue: str, cfg: dict, target_slots: list[datetime]) -> list[dict]:
+    """PadelOS lists only free courts per slot, so unseen courts count as booked."""
+    pc = cfg["platform_config"]
+    clubs = padelos_company_data(pc["company_id"], today_str())
+    club = clubs.get(str(pc["club_id"]))
+    if club is None:
+        log.warning("[%s] club %s not present in PadelOS response", venue, pc["club_id"])
+        return []
+
+    available: dict[str, set[str]] = {}
+    seen: set[str] = set()
+    for duration in club.get("availability", []):
+        if str(duration.get("duration")) != "60":
+            continue
+        for slot in duration.get("slots", []):
+            names = {c["name"].strip() for c in slot.get("courts", [])}
+            seen |= names
+            available.setdefault(slot["startTime"][:5], set()).update(names)
+
+    return build_observations(venue, target_slots, available, seen)
+
+
+# ---------------------------------------------------------------------------
+# KNLTB Meet & Play — Livewire DOM scraping
 # ---------------------------------------------------------------------------
 
 async def dismiss_cookie_banners(page: Page) -> None:
@@ -308,25 +575,36 @@ async def dismiss_cookie_banners(page: Page) -> None:
             continue
 
 
-async def scrape_vinkenveld(page: Page, target_slots: list[datetime]) -> list[dict]:
+async def scrape_livewire(page: Page, venue: str, cfg: dict,
+                          target_slots: list[datetime]) -> list[dict]:
     """
-    Scrape Vinkenveld via Playwright.
+    Scrape a KNLTB Meet & Play club page via Playwright.
 
     The Livewire page renders available slots as <a class="timeslot v2 ..."> elements.
     Each contains:
       - .timeslot-time  → "12:00 - 13:00\n60 minuten"
       - .timeslot-name  → "Padelbaan 2"
     All rendered timeslot elements are AVAILABLE. Courts not shown are booked.
+    The DOM is identical across clubs; only the club id in the URL differs.
     """
     target_map = {fmt(s): s for s in target_slots}
+    url = f"https://meetandplay.nl/club/{cfg['platform_config']['club_id']}?sport=padel"
 
     try:
-        await page.goto(VINKENVELD_URL, wait_until="networkidle", timeout=45_000)
+        # networkidle is unreachable here: the page keeps loading Google Maps tiles
+        # and analytics beacons. Wait for the DOM, then for the slot list itself.
+        await page.goto(url, wait_until="domcontentloaded", timeout=45_000)
         await dismiss_cookie_banners(page)
+        try:
+            await page.wait_for_selector("a[class*='timeslot'], .no-timeslots, text=geen tijdslots",
+                                         timeout=20_000)
+        except Exception:
+            log.debug("[%s] no timeslot markers appeared; reading page as-is", venue)
         await page.wait_for_timeout(2_000)
 
         if DEBUG:
-            shot = f"debug_vinkenveld_{_now().strftime('%H%M')}.png"
+            safe = venue.replace(" ", "_").replace("/", "-")
+            shot = f"debug_{safe}_{_now().strftime('%H%M')}.png"
             await page.screenshot(path=shot, full_page=True)
             log.debug("Screenshot: %s", shot)
 
@@ -363,70 +641,131 @@ async def scrape_vinkenveld(page: Page, target_slots: list[datetime]) -> list[di
             }
         """)
 
-        log.debug("[Vinkenveld] Found %d available timeslot elements", len(slots))
+        log.debug("[%s] Found %d available timeslot elements", venue, len(slots))
 
-        # Build available set from the page
-        available: dict[tuple, bool] = {}
+        # Build the per-slot availability set from the page
+        available: dict[str, set[str]] = {}
         for s in slots:
             hhmm = s["time"]
             if len(hhmm) == 4:  # "9:00" → "09:00"
                 hhmm = hhmm.zfill(5)
             if hhmm in target_map:
-                available[(s["court"], hhmm)] = True
+                available.setdefault(hhmm, set()).add(s["court"])
 
-        # Gather all courts seen on this page (even those with no target slots)
+        # Courts seen on this page count as known, even outside the target slots
         courts_this_page = {s["court"] for s in slots}
-        known_courts = set(get_known_courts("Vinkenveld")) | courts_this_page
-
-        results = []
-        for court in known_courts:
-            for hhmm, slot_dt in target_map.items():
-                # A court is available only if it appeared as a timeslot element on the page
-                # with the matching start time. Otherwise it's booked.
-                avail = (court, hhmm) in available
-                results.append({"court_name": court, "slot_time": slot_dt, "available": avail})
-
-        log.debug("[Vinkenveld] %d observations from %d known courts", len(results), len(known_courts))
-        return results
+        return build_observations(venue, target_slots, available, courts_this_page)
 
     except Exception as exc:
-        log.error("[Vinkenveld] Scrape failed: %s", exc, exc_info=DEBUG)
-        return []
+        log.error("[%s] Scrape failed: %s", venue, exc, exc_info=DEBUG)
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Scraper registry
+# ---------------------------------------------------------------------------
+
+# Platforms served over plain HTTP — no browser, safe to run in a thread pool.
+SYNC_SCRAPERS = {
+    "racketiq": scrape_racketiq,
+    "playtomic": scrape_playtomic,
+    "foys": scrape_foys,
+    "padelos": scrape_padelos,
+}
+
+# Platforms that need a rendered page.
+ASYNC_SCRAPERS = {
+    "livewire": scrape_livewire,
+}
 
 
 # ---------------------------------------------------------------------------
 # Main scrape cycle
 # ---------------------------------------------------------------------------
 
+def active_venues() -> dict:
+    """The enabled venues, narrowed to --venue when that flag was given."""
+    if VENUE_FILTER is None:
+        return VENUES
+    unknown = VENUE_FILTER - set(VENUES)
+    if unknown:
+        log.warning("Unknown or disabled venue(s) in --venue: %s", ", ".join(sorted(unknown)))
+    return {n: c for n, c in VENUES.items() if n in VENUE_FILTER}
+
+
+async def _run_sync_scraper(sem, venue: str, cfg: dict, slots: list[datetime]) -> list[dict]:
+    """Run an HTTP scraper off the event loop so venues fetch in parallel."""
+    fn = SYNC_SCRAPERS[cfg["platform"]]
+    async with sem:
+        try:
+            return await asyncio.to_thread(fn, venue, cfg, slots)
+        except Exception as exc:
+            log.error("[%s] scraper failed: %s", venue, exc, exc_info=DEBUG)
+            return None
+
+
+async def _run_browser_scraper(ctx, sem, venue: str, cfg: dict,
+                               slots: list[datetime]) -> list[dict]:
+    """Run a Playwright scraper in its own page, capped by *sem*."""
+    fn = ASYNC_SCRAPERS[cfg["platform"]]
+    async with sem:
+        page = await ctx.new_page()
+        try:
+            return await fn(page, venue, cfg, slots)
+        except Exception as exc:
+            log.error("[%s] scraper failed: %s", venue, exc, exc_info=DEBUG)
+            return None
+        finally:
+            await page.close()
+
+
 async def run_scrape_cycle() -> None:
     scraped_at = _now()
     time_label = scraped_at.strftime("%H:%M")
-    date_str = today_str()
 
-    terwegen_slots   = slots_to_check(venue_close_hour("Terwegen"))
-    vinkenveld_slots = slots_to_check(venue_close_hour("Vinkenveld"))
+    venues = active_venues()
+    venue_slots_map = {n: slots_to_check(venue_close_hour(n)) for n in venues}
 
-    # --- Terwegen: no browser needed ---
-    log.debug("[Terwegen] Fetching API for %s", date_str)
-    terwegen_obs = scrape_terwegen(terwegen_slots)
+    sync_venues = {n: c for n, c in venues.items() if c["platform"] in SYNC_SCRAPERS}
+    browser_venues = {n: c for n, c in venues.items() if c["platform"] in ASYNC_SCRAPERS}
+    unsupported = set(venues) - set(sync_venues) - set(browser_venues)
+    for n in sorted(unsupported):
+        log.warning("[%s] no scraper for platform '%s' — skipped", n, venues[n]["platform"])
 
-    # --- Vinkenveld: browser ---
-    async with async_playwright() as pw:
-        browser = await pw.chromium.launch(headless=True)
-        ctx = await browser.new_context(
-            user_agent=USER_AGENT,
-            locale="nl-NL",
-            timezone_id="Europe/Amsterdam",
-            viewport={"width": 1280, "height": 900},
-        )
-        page = await ctx.new_page()
-        vinkenveld_obs = await scrape_vinkenveld(page, vinkenveld_slots)
-        await browser.close()
+    # None = the scrape failed; [] = the scrape ran but every court was booked.
+    observations: dict[str, Optional[list[dict]]] = {n: None for n in venues}
+
+    # --- HTTP platforms: all in parallel, no browser ---
+    if sync_venues:
+        names = list(sync_venues)
+        sem = asyncio.Semaphore(HTTP_CONCURRENCY)
+        results = await asyncio.gather(*(
+            _run_sync_scraper(sem, n, sync_venues[n], venue_slots_map[n]) for n in names
+        ))
+        observations.update(dict(zip(names, results)))
+
+    # --- Browser platforms: shared browser, one page each ---
+    if browser_venues:
+        async with async_playwright() as pw:
+            browser = await pw.chromium.launch(headless=True)
+            ctx = await browser.new_context(
+                user_agent=USER_AGENT,
+                locale="nl-NL",
+                timezone_id="Europe/Amsterdam",
+                viewport={"width": 1280, "height": 900},
+            )
+            sem = asyncio.Semaphore(BROWSER_CONCURRENCY)
+            names = list(browser_venues)
+            results = await asyncio.gather(*(
+                _run_browser_scraper(ctx, sem, n, browser_venues[n], venue_slots_map[n])
+                for n in names
+            ))
+            observations.update(dict(zip(names, results)))
+            await browser.close()
 
     # --- Persist and report ---
-    venue_slots_map = {"Terwegen": terwegen_slots, "Vinkenveld": vinkenveld_slots}
-
-    for venue_name, obs_list in [("Terwegen", terwegen_obs), ("Vinkenveld", vinkenveld_obs)]:
+    for venue_name in venues:
+        obs_list = observations[venue_name]
         total_courts = VENUES[venue_name]["total_courts"]
 
         db_rows = [
@@ -437,7 +776,7 @@ async def run_scrape_cycle() -> None:
                 "slot_time": obs["slot_time"].isoformat(),
                 "available": obs["available"],
             }
-            for obs in obs_list
+            for obs in (obs_list or [])
         ]
         save_observations(db_rows)
 
@@ -445,9 +784,10 @@ async def run_scrape_cycle() -> None:
         if not venue_slots:
             log.info("[%s] Outside operating hours — no slots to check.", venue_name)
             continue
-        if not obs_list:
-            print(f"[{time_label}] {venue_name} — scrape returned no data")
+        if obs_list is None:
+            print(f"[{time_label}] {venue_name} — scrape failed, no data recorded")
             continue
+        # An empty list means the scrape succeeded and found nothing free: fully booked.
 
         # Occupancy for the primary (next upcoming) slot only
         primary_slot = venue_slots[0]
@@ -525,9 +865,11 @@ async def wall_clock_sleep(target: datetime) -> None:
 
 async def main() -> None:
     init_db()
+    venues = active_venues()
     log.info("Padel Occupancy Tracker")
     log.info("  DB:  %s", DB_PATH.resolve())
     log.info("  CSV: %s", CSV_PATH.resolve())
+    log.info("  Clubs: %d actief — %s", len(venues), ", ".join(sorted(venues)))
     if DEBUG:
         log.info("  Mode: DEBUG")
 
