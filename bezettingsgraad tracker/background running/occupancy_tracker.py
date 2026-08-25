@@ -547,6 +547,84 @@ def scrape_padelos(venue: str, cfg: dict, target_slots: list[datetime]) -> list[
 
 
 # ---------------------------------------------------------------------------
+# Bookaball  (The Padellers)
+# ---------------------------------------------------------------------------
+
+def scrape_bookaball(venue: str, cfg: dict, target_slots: list[datetime]) -> list[dict]:
+    """
+    Drive the Bookaball booking wizard to count free courts per slot.
+
+    Bookaball publishes no court list and no per-court status; asking for a slot
+    only answers "is there room". But the wizard takes a court_count, so asking
+    for 1, 2, 3 … courts and seeing which slots survive gives the exact number of
+    free courts. The highest count a slot still appears at is what is free.
+
+    Court identity is genuinely not published, so courts are numbered. The counts
+    are exact; only which physical court is which is unknown.
+    """
+    import http.cookiejar
+    import urllib.parse
+
+    pc = cfg["platform_config"]
+    base = pc.get("base_url", "https://thepadellers.bookaball.com")
+    max_courts = pc.get("max_courts", cfg["total_courts"])
+
+    jar = http.cookiejar.CookieJar()
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(jar))
+
+    def call(path: str, payload: Optional[dict] = None):
+        hdrs = {
+            "User-Agent": USER_AGENT,
+            "Accept": "application/json, text/plain, */*",
+            "X-Requested-With": "XMLHttpRequest",
+            "Referer": f"{base}/nl/bookings/create",
+        }
+        for c in jar:
+            if c.name == "XSRF-TOKEN":
+                hdrs["X-XSRF-TOKEN"] = urllib.parse.unquote(c.value)
+        data = None
+        if payload is not None:
+            data = json.dumps(payload).encode()
+            hdrs["Content-Type"] = "application/json"
+        req = urllib.request.Request(base + path, headers=hdrs, data=data)
+        with opener.open(req, timeout=30) as resp:
+            return json.loads(resp.read()) if payload is not None else None
+
+    # Open a session (sets the XSRF cookie), then pin the wizard to this club.
+    call("/nl/bookings/create")
+    call("/api/bookings/create", {"step": "STEP_LOCATION", "location_id": pc["location_id"]})
+
+    date_str = today_str()
+    free_at: dict[str, int] = {}
+    for n in range(1, max_courts + 1):
+        call("/api/bookings/create", {
+            "step": "STEP_SIZE",
+            "sport_type": "padel",
+            "court_size": pc.get("court_size", "double"),
+            "court_count": n,
+            "court_type": pc.get("court_type", "indoor"),
+        })
+        slots = call("/api/bookings/times", {"date": date_str, "duration": 60})
+        found = False
+        for s in slots or []:
+            if s.get("available") and not s.get("disabled"):
+                free_at[s["time"]] = n  # a later, higher n overwrites this
+                found = True
+        if not found:
+            break  # nothing has n courts free, so nothing will have n+1 either
+
+    prefix = pc.get("court_label", "Baan")
+    available: dict[str, set[str]] = {
+        hhmm: {f"{prefix} {i}" for i in range(1, count + 1)}
+        for hhmm, count in free_at.items()
+    }
+    all_courts = {f"{prefix} {i}" for i in range(1, max_courts + 1)}
+
+    log.debug("[%s] free courts per slot: %s", venue, dict(sorted(free_at.items())))
+    return build_observations(venue, target_slots, available, all_courts)
+
+
+# ---------------------------------------------------------------------------
 # KNLTB Meet & Play — Livewire DOM scraping
 # ---------------------------------------------------------------------------
 
@@ -671,6 +749,7 @@ SYNC_SCRAPERS = {
     "playtomic": scrape_playtomic,
     "foys": scrape_foys,
     "padelos": scrape_padelos,
+    "bookaball": scrape_bookaball,
 }
 
 # Platforms that need a rendered page.

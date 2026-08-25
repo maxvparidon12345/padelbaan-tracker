@@ -267,12 +267,16 @@
       "naam": "The Padellers Uitgeest",
       "regio": "IJmuiden / Velsen",
       "soort": "indoor",
-      "enabled": false,
+      "enabled": true,
       "platform": "bookaball",
       "platform_config": {
-        "location_id": 7
+        "base_url": "https://thepadellers.bookaball.com",
+        "location_id": 7,
+        "court_size": "double",
+        "court_type": "indoor",
+        "max_courts": 4
       },
-      "total_courts": 6,
+      "total_courts": 4,
       "slot_step_minutes": 30,
       "close_hours": [
         23,
@@ -284,7 +288,7 @@
         21
       ],
       "known_courts": [],
-      "notitie": "Bookaball geeft per tijdslot alleen 'wel/niet beschikbaar', geen baannamen of aantal vrije banen. Levert dus geen bezettingspercentage."
+      "notitie": "Alleen de 4 double indoorbanen; de 2 singlebanen zijn een aparte baanmaat en tellen niet mee. Bookaball publiceert geen baannamen, dus de banen zijn genummerd. De aantallen vrije banen zijn wel exact: de scraper vraagt achtereenvolgens om 1 t/m 4 banen tegelijk."
     },
     {
       "naam": "LTC De Heerenduinen",
@@ -424,7 +428,7 @@
         23
       ],
       "known_courts": [],
-      "notitie": "baanreserveren.nl toont beschikbaarheid pas na inloggen met een account."
+      "notitie": "baanreserveren.nl vereist een account: /reservations stuurt door naar /auth/login en er is geen publiek beschikbaarheids-endpoint (gecontroleerd op api/, matrix en club/257)."
     },
     {
       "naam": "Tennis en Padel de Rading",
