@@ -13576,3 +13576,13 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-08-27T18:29:42.221380,Peakz Padel Haarlem,18:30,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
 2026-08-27T18:29:42.221380,The Padellers Uitgeest,18:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
 2026-08-27T18:29:42.221380,Peakz Padel Utrecht Vechtsebanen,18:30,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
+2026-08-27T18:45:47.779017,Terwegen,19:00,8,6,75.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 6,Padelbaan 8; available: Padelbaan 5,Padelbaan 7"
+2026-08-27T18:45:47.779017,Vinkenveld,19:00,4,2,50.0,"booked: Padelbaan 3,Padelbaan 4; available: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2"
+2026-08-27T18:45:47.779017,Padelclub Rotterdam - Terbregge,19:00,15,15,100.0,"booked: Terbregge 10 - AXS ict,Terbregge 11 - Auto Hoogenboom,Terbregge 12-  Master in Finance,Terbregge 9; 11 unknown"
+2026-08-27T18:45:47.779017,Padelclub Rotterdam - Feyenoord,19:00,6,6,100.0,booked: Feijenoord 6 (outdoor) - Upcourt; 5 unknown
+2026-08-27T18:45:47.779017,Padelclub Rotterdam - Victoria,19:00,3,2,66.7,booked: Victoria 3; available: Victoria 1; 1 unknown
+2026-08-27T18:45:47.779017,Lake Seven,19:00,12,8,66.7,"available: Padelbaan 1 buiten,Padelbaan 2 buiten,Padelbaan 4 buiten,Padelbaan 7 buiten; 8 unknown"
+2026-08-27T18:45:47.779017,Peakz Padel Heemskerk,19:00,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
+2026-08-27T18:45:47.779017,Peakz Padel Haarlem,19:00,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
+2026-08-27T18:45:47.779017,The Padellers Uitgeest,19:00,4,3,75.0,"booked: Baan 2,Baan 3,Baan 4; available: Baan 1"
+2026-08-27T18:45:47.779017,Peakz Padel Utrecht Vechtsebanen,19:00,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
