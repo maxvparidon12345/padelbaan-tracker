@@ -14096,3 +14096,13 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-08-28T20:15:47.976099,Peakz Padel Haarlem,20:30,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
 2026-08-28T20:15:47.976099,The Padellers Uitgeest,20:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
 2026-08-28T20:15:47.976099,Peakz Padel Utrecht Vechtsebanen,20:30,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
+2026-08-28T20:45:49.102796,Terwegen,21:00,8,1,12.5,"booked: Padelbaan 1 (Panorama court); available: Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
+2026-08-28T20:45:49.102796,Vinkenveld,21:00,4,1,25.0,"booked: Padelbaan 3; available: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 4"
+2026-08-28T20:45:49.102796,Padelclub Rotterdam - Terbregge,21:00,15,13,86.7,"booked: Terbregge 1 - Mister Valencia,Terbregge 10 - AXS ict,Terbregge 2 - Deloitte,Terbregge 8 (outdoor); available: Terbregge 5 - TROBI,Terbregge 7 (outdoor); 9 unknown"
+2026-08-28T20:45:49.102796,Padelclub Rotterdam - Feyenoord,21:00,6,6,100.0,booked: Feijenoord 5 - Mister Valencia; 5 unknown
+2026-08-28T20:45:49.102796,Padelclub Rotterdam - Victoria,21:00,3,0,0.0,"available: Victoria 1,Victoria 2,Victoria 3"
+2026-08-28T20:45:49.102796,Lake Seven,21:00,12,7,58.3,"available: Padelbaan 1 buiten,Padelbaan 2 buiten,Padelbaan 3 buiten,Padelbaan 5 binnen,Padelbaan 5 buiten; 7 unknown"
+2026-08-28T20:45:49.102796,Peakz Padel Heemskerk,21:00,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
+2026-08-28T20:45:49.102796,Peakz Padel Haarlem,21:00,4,3,75.0,"booked: Baan 1 | 🎥,Baan 2,Baan 4; available: Baan 3 Mollie"
+2026-08-28T20:45:49.102796,The Padellers Uitgeest,21:00,4,3,75.0,"booked: Baan 2,Baan 3,Baan 4; available: Baan 1"
+2026-08-28T20:45:49.102796,Peakz Padel Utrecht Vechtsebanen,21:00,14,13,92.9,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 7,Baan 8,Baan 9; available: Baan 6"
