@@ -14526,3 +14526,13 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-08-29T17:45:08.561688,Peakz Padel Haarlem,18:00,4,0,0.0,"available: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
 2026-08-29T17:45:08.561688,The Padellers Uitgeest,18:00,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
 2026-08-29T17:45:08.561688,Peakz Padel Utrecht Vechtsebanen,18:00,14,11,78.6,"booked: Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9; available: Baan 1 Mollie | 🎥,Baan 10,Baan 4 | 🎥"
+2026-08-29T18:16:06.251625,Terwegen,18:30,8,8,100.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
+2026-08-29T18:16:06.251625,Vinkenveld,18:30,4,1,25.0,"booked: Padelbaan 1 / PURE Tennis & Padel; available: Padelbaan 2,Padelbaan 3,Padelbaan 4"
+2026-08-29T18:16:06.251625,Padelclub Rotterdam - Terbregge,18:30,15,5,33.3,"booked: Terbregge 4,Terbregge 5 - TROBI,Terbregge Single 1 (1 vs 1),Terbregge Single 2 (1 vs 1); available: Terbregge 1 - Mister Valencia,Terbregge 10 - AXS ict,Terbregge 11 - Auto Hoogenboom,Terbregge 12-  Master in Finance,Terbregge 13,Terbregge 2 - Deloitte,Terbregge 6 - Strik op de Dijk,Terbregge 7 (outdoor),Terbregge 8 (outdoor),Terbregge 9; 1 unknown"
+2026-08-29T18:16:06.251625,Padelclub Rotterdam - Feyenoord,18:30,6,6,100.0,booked: Feijenoord 6 (outdoor) - Upcourt; 5 unknown
+2026-08-29T18:16:06.251625,Padelclub Rotterdam - Victoria,18:30,3,3,100.0,3 unknown
+2026-08-29T18:16:06.251625,Lake Seven,18:30,12,12,100.0,12 unknown
+2026-08-29T18:16:06.251625,Peakz Padel Heemskerk,18:30,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
+2026-08-29T18:16:06.251625,Peakz Padel Haarlem,18:30,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
+2026-08-29T18:16:06.251625,The Padellers Uitgeest,18:30,4,2,50.0,"booked: Baan 3,Baan 4; available: Baan 1,Baan 2"
+2026-08-29T18:16:06.251625,Peakz Padel Utrecht Vechtsebanen,18:30,14,12,85.7,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 7,Baan 8,Baan 9; available: Baan 2 | 🎥,Baan 6"
