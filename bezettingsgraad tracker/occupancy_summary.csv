@@ -14566,3 +14566,7 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-08-29T20:15:57.491474,Padelclub Rotterdam - Terbregge,20:30,15,15,100.0,"booked: Terbregge 10 - AXS ict,Terbregge 12-  Master in Finance,Terbregge 13,Terbregge 2 - Deloitte,Terbregge 7 (outdoor),Terbregge 8 (outdoor),Terbregge 9,Terbregge Single 2 (1 vs 1); 7 unknown"
 2026-08-29T20:15:57.491474,Padelclub Rotterdam - Feyenoord,20:30,6,5,83.3,available: Feijenoord 6 (outdoor) - Upcourt; 5 unknown
 2026-08-29T20:15:57.491474,Padelclub Rotterdam - Victoria,20:30,3,3,100.0,3 unknown
+2026-08-29T20:45:46.426653,Vinkenveld,21:00,4,0,0.0,"available: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
+2026-08-29T20:45:46.426653,Padelclub Rotterdam - Terbregge,21:00,15,7,46.7,"available: Terbregge 10 - AXS ict,Terbregge 12-  Master in Finance,Terbregge 13,Terbregge 2 - Deloitte,Terbregge 7 (outdoor),Terbregge 8 (outdoor),Terbregge 9,Terbregge Single 2 (1 vs 1); 7 unknown"
+2026-08-29T20:45:46.426653,Padelclub Rotterdam - Feyenoord,21:00,6,5,83.3,available: Feijenoord 6 (outdoor) - Upcourt; 5 unknown
+2026-08-29T20:45:46.426653,Padelclub Rotterdam - Victoria,21:00,3,3,100.0,3 unknown
