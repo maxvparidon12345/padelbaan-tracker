@@ -16296,3 +16296,13 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-09-02T14:45:53.268735,Peakz Padel Haarlem,15:00,4,1,25.0,"booked: Baan 2; available: Baan 1 | 🎥,Baan 3 Mollie,Baan 4"
 2026-09-02T14:45:53.268735,The Padellers Uitgeest,15:00,4,1,25.0,"booked: Baan 4; available: Baan 1,Baan 2,Baan 3"
 2026-09-02T14:45:53.268735,Peakz Padel Utrecht Vechtsebanen,15:00,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
+2026-09-02T15:15:57.938123,Terwegen,15:30,8,2,25.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 3; available: Padelbaan 2,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
+2026-09-02T15:15:57.938123,Vinkenveld,15:30,4,0,0.0,"available: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
+2026-09-02T15:15:57.938123,Padelclub Rotterdam - Terbregge,15:30,15,13,86.7,"booked: Terbregge 1 - Mister Valencia,Terbregge 11 - Auto Hoogenboom,Terbregge 12-  Master in Finance,Terbregge 13,Terbregge 2 - Deloitte,Terbregge 3 - Holland Padel,Terbregge 6 - Strik op de Dijk,Terbregge 7 (outdoor),Terbregge 8 (outdoor),Terbregge 9; available: Terbregge 10 - AXS ict,Terbregge 5 - TROBI; 3 unknown"
+2026-09-02T15:15:57.938123,Padelclub Rotterdam - Feyenoord,15:30,6,6,100.0,"booked: Feijenoord 3,Feijenoord 6 (outdoor) - Upcourt; 4 unknown"
+2026-09-02T15:15:57.938123,Padelclub Rotterdam - Victoria,15:30,3,3,100.0,3 unknown
+2026-09-02T15:15:57.938123,Lake Seven,15:30,12,4,33.3,"available: Padelbaan 1 binnen,Padelbaan 2 binnen,Padelbaan 4 binnen,Padelbaan 4 buiten,Padelbaan 5 binnen,Padelbaan 5 buiten,Padelbaan 6 buiten,Padelbaan 7 buiten; 4 unknown"
+2026-09-02T15:15:57.938123,Peakz Padel Heemskerk,15:30,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
+2026-09-02T15:15:57.938123,Peakz Padel Haarlem,15:30,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
+2026-09-02T15:15:57.938123,The Padellers Uitgeest,15:30,4,2,50.0,"booked: Baan 3,Baan 4; available: Baan 1,Baan 2"
+2026-09-02T15:15:57.938123,Peakz Padel Utrecht Vechtsebanen,15:30,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
