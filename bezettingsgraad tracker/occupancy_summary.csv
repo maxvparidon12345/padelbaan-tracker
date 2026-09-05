@@ -17569,3 +17569,13 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-09-05T06:45:52.745056,Peakz Padel Haarlem,07:00,4,4,100.0,4 unknown
 2026-09-05T06:45:52.745056,The Padellers Uitgeest,07:00,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
 2026-09-05T06:45:52.745056,Peakz Padel Utrecht Vechtsebanen,07:00,14,14,100.0,14 unknown
+2026-09-05T07:15:55.706949,Terwegen,07:30,8,8,100.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
+2026-09-05T07:15:55.706949,Vinkenveld,07:30,4,4,100.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
+2026-09-05T07:15:55.706949,Padelclub Rotterdam - Terbregge,07:30,15,15,100.0,"booked: Terbregge 1 - Mister Valencia,Terbregge 10 - AXS ict,Terbregge 11 - Auto Hoogenboom,Terbregge 12-  Master in Finance,Terbregge 13,Terbregge 2 - Deloitte,Terbregge 3 - Holland Padel,Terbregge 4,Terbregge 5 - TROBI,Terbregge 6 - Strik op de Dijk,Terbregge 7 (outdoor),Terbregge 8 (outdoor),Terbregge 9,Terbregge Single 1 (1 vs 1),Terbregge Single 2 (1 vs 1)"
+2026-09-05T07:15:55.706949,Padelclub Rotterdam - Feyenoord,07:30,6,7,116.7,"booked: Feijenoord 1,Feijenoord 2 - Pluto Sport,Feijenoord 3,Feijenoord 4,Feijenoord 5 - Mister Valencia,Feijenoord 6 (outdoor) - Upcourt,Feijenoord Single 1 (1 vs 1)"
+2026-09-05T07:15:55.706949,Padelclub Rotterdam - Victoria,07:30,3,3,100.0,3 unknown
+2026-09-05T07:15:55.706949,Lake Seven,07:30,12,12,100.0,"booked: Padelbaan 1 buiten,Padelbaan 2 buiten,Padelbaan 3 binnen,Padelbaan 3 buiten,Padelbaan 4 binnen,Padelbaan 4 buiten,Padelbaan 5 binnen,Padelbaan 5 buiten; 4 unknown"
+2026-09-05T07:15:55.706949,Peakz Padel Heemskerk,07:30,8,8,100.0,8 unknown
+2026-09-05T07:15:55.706949,Peakz Padel Haarlem,07:30,4,4,100.0,4 unknown
+2026-09-05T07:15:55.706949,The Padellers Uitgeest,07:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
+2026-09-05T07:15:55.706949,Peakz Padel Utrecht Vechtsebanen,07:30,14,14,100.0,14 unknown
