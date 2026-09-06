@@ -18163,3 +18163,13 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-09-06T12:15:50.802686,Peakz Padel Haarlem,12:30,4,3,75.0,"booked: Baan 1 | 🎥,Baan 2,Baan 4; available: Baan 3 Mollie"
 2026-09-06T12:15:50.802686,The Padellers Uitgeest,12:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
 2026-09-06T12:15:50.802686,Peakz Padel Utrecht Vechtsebanen,12:30,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
+2026-09-06T12:45:49.543589,Terwegen,13:00,8,4,50.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 4,Padelbaan 8; available: Padelbaan 3,Padelbaan 5,Padelbaan 6,Padelbaan 7"
+2026-09-06T12:45:49.543589,Vinkenveld,13:00,4,4,100.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
+2026-09-06T12:45:49.543589,Padelclub Rotterdam - Terbregge,13:00,15,13,86.7,"booked: Terbregge 1 - Mister Valencia,Terbregge 10 - AXS ict,Terbregge 12-  Master in Finance,Terbregge 13,Terbregge 4,Terbregge 5 - TROBI,Terbregge 9; available: Terbregge 2 - Deloitte,Terbregge 8 (outdoor); 6 unknown"
+2026-09-06T12:45:49.543589,Padelclub Rotterdam - Feyenoord,13:00,6,6,100.0,"booked: Feijenoord 1,Feijenoord 2 - Pluto Sport,Feijenoord 3,Feijenoord 4,Feijenoord 5 - Mister Valencia,Feijenoord 6 (outdoor) - Upcourt"
+2026-09-06T12:45:49.543589,Padelclub Rotterdam - Victoria,13:00,3,3,100.0,3 unknown
+2026-09-06T12:45:49.543589,Lake Seven,13:00,12,10,83.3,"available: Padelbaan 3 binnen,Padelbaan 4 binnen; 10 unknown"
+2026-09-06T12:45:49.543589,Peakz Padel Heemskerk,13:00,8,7,87.5,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8; available: Baan 3"
+2026-09-06T12:45:49.543589,Peakz Padel Haarlem,13:00,4,2,50.0,"booked: Baan 1 | 🎥,Baan 3 Mollie; available: Baan 2,Baan 4"
+2026-09-06T12:45:49.543589,The Padellers Uitgeest,13:00,4,0,0.0,"available: Baan 1,Baan 2,Baan 3,Baan 4"
+2026-09-06T12:45:49.543589,Peakz Padel Utrecht Vechtsebanen,13:00,14,13,92.9,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9; available: Baan 12"
