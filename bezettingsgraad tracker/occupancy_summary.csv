@@ -29954,3 +29954,13 @@ timestamp,venue,time_slot,total_courts,true_occupied,occupancy_pct,notes
 2026-10-06T14:00:30.638477,Peakz Padel Haarlem,14:30,4,1,25.0,"booked: Baan 1 | 🎥; available: Baan 2,Baan 3 Mollie,Baan 4"
 2026-10-06T14:00:30.638477,The Padellers Uitgeest,14:30,4,3,75.0,"booked: Baan 2,Baan 3,Baan 4; available: Baan 1"
 2026-10-06T14:00:30.638477,Peakz Padel Utrecht Vechtsebanen,14:30,14,12,85.7,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7; available: Baan 8,Baan 9"
+2026-10-06T20:19:45.331823,Terwegen,20:30,8,8,100.0,"booked: Padelbaan 1 (Panorama court),Padelbaan 2,Padelbaan 3,Padelbaan 4,Padelbaan 5,Padelbaan 6,Padelbaan 7,Padelbaan 8"
+2026-10-06T20:19:45.331823,Vinkenveld,20:30,4,4,100.0,"booked: Padelbaan 1 / PURE Tennis & Padel,Padelbaan 2,Padelbaan 3,Padelbaan 4"
+2026-10-06T20:19:45.331823,Padelclub Rotterdam - Terbregge,20:30,15,15,100.0,"booked: Terbregge 8 (outdoor),Terbregge 9,Terbregge Single 1 (1 vs 1); 12 unknown"
+2026-10-06T20:19:45.331823,Padelclub Rotterdam - Feyenoord,20:30,6,6,100.0,6 unknown
+2026-10-06T20:19:45.331823,Padelclub Rotterdam - Victoria,20:30,3,3,100.0,3 unknown
+2026-10-06T20:19:45.331823,Lake Seven,20:30,12,12,100.0,12 unknown
+2026-10-06T20:19:45.331823,Peakz Padel Heemskerk,20:30,8,8,100.0,"booked: Baan 1 | 🎥,Baan 2 Mollie | 🎥,Baan 3,Baan 4,Baan 5,Baan 6,Baan 7,Baan 8"
+2026-10-06T20:19:45.331823,Peakz Padel Haarlem,20:30,4,4,100.0,"booked: Baan 1 | 🎥,Baan 2,Baan 3 Mollie,Baan 4"
+2026-10-06T20:19:45.331823,The Padellers Uitgeest,20:30,4,4,100.0,"booked: Baan 1,Baan 2,Baan 3,Baan 4"
+2026-10-06T20:19:45.331823,Peakz Padel Utrecht Vechtsebanen,20:30,14,14,100.0,"booked: Baan 1 Mollie | 🎥,Baan 10,Baan 11,Baan 12,Baan 13,Baan 14,Baan 2 | 🎥,Baan 3 | 🎥,Baan 4 | 🎥,Baan 5,Baan 6,Baan 7,Baan 8,Baan 9"
